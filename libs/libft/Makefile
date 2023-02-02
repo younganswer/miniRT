@@ -9,9 +9,9 @@ CFLAGS = -Wall -Wextra -Werror -O3
 AR = ar rcs
 RM = rm -f
 
-INCS_DIR = ./incs
-SRCS_DIR = ./srcs
-OBJS_DIR = ./objs
+INCS_DIR = incs
+SRCS_DIR = srcs
+OBJS_DIR = objs
 
 SRCS =  ft_atoi.c \
 		ft_bzero.c \
