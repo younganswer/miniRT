@@ -32,7 +32,8 @@ LDFLAGS	= -L${LIBFT_DIR} -lft -L${LIBGNL_DIR} -lgnl -L${LIBVEC_DIR} -lvec -L${LI
 AR		= ar rcs
 RM		= rm -f
 
-SRCS = 	miniRT.c
+SRCS = 	miniRT.c \
+		ray/ray.c
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
@@ -67,10 +68,7 @@ ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 ${OBJS_DIR}:
 	@echo "Build ${NAME}"
 	@mkdir -p ${OBJS_DIR}
-	@mkdir -p ${OBJS_DIR}/game
-	@mkdir -p ${OBJS_DIR}/parse
-	@mkdir -p ${OBJS_DIR}/raycast
-	@mkdir -p ${OBJS_DIR}/render
+	@mkdir -p ${OBJS_DIR}/ray
 
 
 ${LIBFT}:
@@ -93,6 +91,7 @@ clean:
 	@echo "Remove dependencies in ${NAME}"
 	@${MAKE} -C ${LIBFT_DIR} clean
 	@${MAKE} -C ${LIBGNL_DIR} clean
+	@${MAKE} -C ${LIBVEC_DIR} clean
 	@${MAKE} -C ${LIBMLX_DIR} clean
 	@rm -rf ${OBJS_DIR}
 
@@ -101,6 +100,7 @@ fclean:
 	@echo "Remove dependencies in ${NAME}"
 	@${MAKE} -C ${LIBFT_DIR} fclean
 	@${MAKE} -C ${LIBGNL_DIR} fclean
+	@${MAKE} -C ${LIBVEC_DIR} fclean
 	@${MAKE} -C ${LIBMLX_DIR} fclean
 	@echo "Remove ${NAME}"
 	@rm -rf ${OBJS_DIR}
