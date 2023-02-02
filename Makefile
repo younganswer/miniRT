@@ -14,6 +14,10 @@ LIBGNL_DIR		:= ${LIBS_DIR}/libgnl
 LIBGNL_INCS_DIR	:= ${LIBGNL_DIR}/incs
 LIBGNL			:= ${LIBGNL_DIR}/libgnl.a
 
+LIBVEC_DIR		:= ${LIBS_DIR}/libvec
+LIBVEC_INCS_DIR	:= ${LIBVEC_DIR}/incs
+LIBVEC			:= ${LIBVEC_DIR}/libvec.a
+
 LIBMLX_DIR		:= ${LIBS_DIR}/libmlx
 LIBMLX_INCS_DIR	:= ${LIBMLX_DIR}/incs
 LIBMLX			:= ${LIBMLX_DIR}/libmlx.dylib
@@ -23,8 +27,8 @@ SRCS_DIR	= srcs
 OBJS_DIR	= objs
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${LIBGNL_INCS_DIR} -I${LIBMLX_INCS_DIR} -MD -O3
-LDFLAGS	= -L${LIBFT_DIR} -lft -L${LIBGNL_DIR} -lgnl -L${LIBMLX_DIR} -lmlx -framework OpenGL -framework AppKit
+CFLAGS	= -Wall -Wextra -Werror -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${LIBGNL_INCS_DIR} -I${LIBVEC_INCS_DIR} -I${LIBMLX_INCS_DIR} -MD -O3
+LDFLAGS	= -L${LIBFT_DIR} -lft -L${LIBGNL_DIR} -lgnl -L${LIBVEC_DIR} -lvec -L${LIBMLX_DIR} -lmlx -framework OpenGL -framework AppKit
 AR		= ar rcs
 RM		= rm -f
 
@@ -77,7 +81,11 @@ ${LIBGNL}: ${LIBFT}
 	@${MAKE} -C ${LIBGNL_DIR}
 
 
-${LIBMLX}: ${LIBGNL}
+${LIBVEC}: ${LIBGNL}
+	@${MAKE} -C ${LIBVEC_DIR}
+
+
+${LIBMLX}: ${LIBVEC}
 	@${MAKE} -C ${LIBMLX_DIR}
 
 
