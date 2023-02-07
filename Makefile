@@ -33,7 +33,9 @@ AR		= ar rcs
 RM		= rm -f
 
 SRCS = 	miniRT.c \
-		ray/ray.c
+		parse/parse.c \
+		parse/parse_camera.c \
+		ray/ray.c \
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
@@ -69,6 +71,7 @@ ${OBJS_DIR}:
 	@echo "Build ${NAME}"
 	@mkdir -p ${OBJS_DIR}
 	@mkdir -p ${OBJS_DIR}/ray
+	@mkdir -p ${OBJS_DIR}/parse
 
 
 ${LIBFT}:
