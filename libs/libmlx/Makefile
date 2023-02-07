@@ -2,111 +2,81 @@ SHELL	= /bin/bash
 SPINNER	= /-\|/
 IDX		= 0
 
-SRCS_DIR	:= ./srcs
-OBJS_DIR	:= ./objs
-INCS_DIR	:= ./incs
-
-MODULE_SRCS	:= mlx_image.swift mlx_window.swift mlx_init.swift
-MODULE_SRCS	:= ${addprefix ${SRCS_DIR}/, ${MODULE_SRCS}}
-MODULE_OBJS	:= ${MODULE_SRCS:${SRCS_DIR}/%.swift=${OBJS_DIR}/%.swiftmodule}
-
-SRCS	:= interface.swift
-SRCS	:= ${addprefix ${SRCS_DIR}/, ${SRCS}}
-SRCS	:= ${SRCS} ${MODULE_SRCS}
-OBJS	:= ${SRCS:${SRCS_DIR}/%.swift=${OBJS_DIR}/%.o}
-
-C_SRCS	:= mlx_xpm.c mlx_png.c mlx_string_put.c
-C_SRCS	:= ${addprefix ${SRCS_DIR}/, ${C_SRCS}}
-C_OBJS	:= ${C_SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
-
-CC		:= gcc
+NAME	:= libmlx.a
+CC		:= cc
 CFLAGS	:= -O3
+# add to match string put with X11 in size and position
+CFLAGS	+= -DSTRINGPUTX11
+CFLAGS	+= -Wno-deprecated-declarations
+AR		:= ar rcs
+RM		:= rm -f
 
-NAME	:= libmlx.dylib
-#OPTI	:= -Ounchecked
+INCS_DIR	:= incs
+SRCS_DIR	:= srcs
+OBJS_DIR	:= objs
+
+SRCS	:=	mlx_shaders.c \
+			mlx_new_window.m \
+			mlx_init_loop.m \
+			mlx_new_image.m \
+			mlx_xpm.c \
+			mlx_int_str_to_wordtab.c
+SRCS	+=	mlx_png.c \
+			mlx_mouse.m
+
+SRCS	:= ${addprefix ${SRCS_DIR}/, ${SRCS}}
+OBJS	:= ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
+OBJS	:= ${OBJS:${SRCS_DIR}/%.m=${OBJS_DIR}/%.o}
 
 
 all: ${NAME}
 
 
-${NAME}: ${C_OBJS}
+${NAME}: ${OBJS}
 	@printf "\bdone\n"
-	@swiftc ${OPTI} -o ${NAME} -emit-library ${OBJS} ${C_OBJS} -lz
+	@${AR} ${NAME} ${OBJS}
 	@echo "Build ${NAME}: done"
 
 
 ${OBJS_DIR}:
+	@echo "Build libmlx.a"
 	@mkdir -p $@
+	
 
-
-${C_OBJS}: ${OBJS}
-
-
-${OBJS}: ${OBJS_DIR}/interface.swiftmodule
-
-
-${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c
+${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 	${eval IDX = ${shell expr ${IDX} + 1}}
 	${eval T_IDX = ${shell expr ${IDX} % 32}}
 	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
 	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
+	@if [ ${IDX} = 1 ]; then echo -n "Build dependencies in ${NAME} ...  "; fi
 	@printf "\b${CHR}"
-	@${CC} ${CFLAGS} -c $< -o $@ -I${INCS_DIR}
+	@${CC} ${CFLAGS} -c $< -o $@ -I ${INCS_DIR}
 
 
-${OBJS_DIR}/%.o: ${SRCS_DIR}/%.swift
+${OBJS_DIR}/%.o: ${SRCS_DIR}/%.m | ${OBJS_DIR}
 	${eval IDX = ${shell expr ${IDX} + 1}}
 	${eval T_IDX = ${shell expr ${IDX} % 32}}
 	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
 	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
+	@if [ ${IDX} = 1 ]; then echo -n "Build dependencies in ${NAME} ...  "; fi
 	@printf "\b${CHR}"
-	@swiftc ${OPTI} -parse-as-library -c $< -o $@ -I${OBJS_DIR}
-
-
-${OBJS_DIR}/interface.swiftmodule: ${OBJS_DIR}/mlx_init.swiftmodule
-	${eval IDX = ${shell expr ${IDX} + 1}}
-	${eval T_IDX = ${shell expr ${IDX} % 32}}
-	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
-	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
-	@printf "\b${CHR}"
-	@swiftc ${OPTI} -parse-as-library -c ${SRCS_DIR}/interface.swift -o ${OBJS_DIR}/interface.swiftmodule -emit-module -module-name interface -module-link-name interface -I${OBJS_DIR}
-
-
-${OBJS_DIR}/mlx_init.swiftmodule: ${OBJS_DIR}/mlx_window.swiftmodule
-	${eval IDX = ${shell expr ${IDX} + 1}}
-	${eval T_IDX = ${shell expr ${IDX} % 32}}
-	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
-	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
-	@printf "\b${CHR}"
-	@swiftc ${OPTI} -parse-as-library -c ${SRCS_DIR}/mlx_init.swift -o ${OBJS_DIR}/mlx_init.swiftmodule -emit-module -module-name mlx_init -module-link-name mlx_init -I${OBJS_DIR}
-
-
-${OBJS_DIR}/mlx_window.swiftmodule: ${OBJS_DIR}/mlx_image.swiftmodule
-	${eval IDX = ${shell expr ${IDX} + 1}}
-	${eval T_IDX = ${shell expr ${IDX} % 32}}
-	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
-	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
-	@printf "\b${CHR}"
-	@swiftc ${OPTI} -parse-as-library -c ${SRCS_DIR}/mlx_window.swift -o ${OBJS_DIR}/mlx_window.swiftmodule -emit-module -module-name mlx_window -module-link-name mlx_window -I${OBJS_DIR}
-
-
-${OBJS_DIR}/mlx_image.swiftmodule: ${OBJS_DIR}
-	${eval IDX = ${shell expr ${IDX} + 1}}
-	${eval T_IDX = ${shell expr ${IDX} % 32}}
-	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
-	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
-	@if [ ${IDX} = 1 ]; then\
-		echo -n "Build dependencies in ${NAME} ...  ";\
-	fi
-	@printf "\b${CHR}"
-	@swiftc ${OPTI} -parse-as-library -c ${SRCS_DIR}/mlx_image.swift -o ${OBJS_DIR}/mlx_image.swiftmodule -emit-module -module-name mlx_image -module-link-name mlx_image -I${OBJS_DIR}
+	@${CC} ${CFLAGS} -c $< -o $@ -I ${INCS_DIR}
 
 
 clean:
-	@echo "Remove dependencies in ${NAME}"
-	@rm -rf ${OBJS_DIR}
+	@echo "Remove dependencies in libmlx.a"
+	@${RM} -r ${OBJS_DIR}
 
 
 fclean: clean
-	@echo "Remove ${NAME}"
-	@rm -rf ${NAME}
+	@echo "Remove libmlx.a"
+	@${RM} ${NAME}
+
+
+re:
+	@echo "Rebuild libmlx.a"
+	@${MAKE} fclean
+	@${MAKE} all
+
+
+.PHONY: all clean fclean re

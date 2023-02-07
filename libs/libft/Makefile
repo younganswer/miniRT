@@ -68,38 +68,49 @@ SRCS =  ft_atoi.c \
 SRCS := ${SRCS:%.c=${SRCS_DIR}/%.c}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
 
-all: ${OBJS_DIR}
-	@make ${NAME}
+
+all: ${NAME}
+
 
 ${NAME}: ${OBJS}
 	@printf "\bdone\n"
 	@${AR} $@ $^
-	@echo "Build libft.a: done"
+	@echo "Build ${NAME}: done"
+
+
+${OBJS}: ${OBJS_DIR}
+
+
+${OBJS_DIR}:
+	@echo "Build ${NAME}"
+	@mkdir -p objs
+
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c
 	${eval IDX = ${shell expr ${IDX} + 1}}
 	${eval T_IDX = ${shell expr ${IDX} % 32}}
 	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
 	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
-	@if [ ${IDX} = 1 ]; then echo -n "Build dependencies in libft.a ...  "; fi
+	@if [ ${IDX} = 1 ]; then echo -n "Build dependencies in ${NAME} ...  "; fi
 	@printf "\b${CHR}"
 	@${CC} ${CFLAGS} -c $< -o $@ -I ${INCS_DIR}
 
-${OBJS_DIR}:
-	@echo "Build libft.a"
-	@mkdir -p objs
+
 
 clean:
-	@echo "Remove dependencies in libft"
+	@echo "Remove dependencies in ${NAME}"
 	@rm -rf ${OBJS_DIR}
 
+
 fclean: clean
-	@echo "Remove libft.a"
+	@echo "Remove ${NAME}"
 	@${RM} ${NAME}
 
+
 re:
-	@echo "Re-build libft.a"
-	@make fclean
-	@make all
+	@echo "Rebuild ${NAME}"
+	@${MAKE} fclean
+	@${MAKE} all
+
 
 .PHONY: bonus all clean fclean re
