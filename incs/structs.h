@@ -1,18 +1,81 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# include "../libs/libft/incs/libft.h"
 # include "../libs/libvec/incs/vec3.h"
-# include "ray.h"
+# include "../libs/libray/incs/libray.h"
+# include "err.h"
+
+# define SCREEN_WIDTH 1280
+# define SCREEN_HEIGHT 720
+// # define SCREEN_WIDTH 1920
+// # define SCREEN_HEIGHT 1080
+
+typedef enum	e_x_event
+{
+	KEY_PRESSED = 2,
+	KEY_RELEASED = 3,
+	MOUSE_PRESSED = 4,
+	MOUSE_RELEASED = 5,
+	MOUSE_MOVED = 6,
+	MOUSE_SCROLLED = 7,
+	KEY_DESTROY = 17,
+}	t_x_event;
 
 typedef struct	s_camera
 {
 	t_ray	ray;
+	double	aspect_ratio;
+	double	viewport_height;
+	double	viewport_width;
+	double	focal_length;
+	t_vec3	horizontal;
+	t_vec3	vertical;
+	t_vec3	lower_left_corner;
 	double	fov;
-}			t_camera;
+}	t_camera;
+
+typedef struct	s_sphere
+{
+	t_vec3	center;
+	double	radius;
+}	t_sphere;
+
+typedef enum	e_shape_type
+{
+	SPHERE,
+	PLANE,
+	CYLINDER,
+}	t_shape_type;
+
+typedef struct	s_shape
+{
+	void			*shape;
+	t_shape_type	type;
+}	t_shape;
+
+typedef struct	s_mlx
+{
+	void	*mlx;
+	void	*window;
+}	t_mlx;
+
+typedef struct	s_img
+{
+	void			*img;
+	unsigned int	*addr;
+	int				bits_per_pixel;
+	int				size_line;
+	int				endian;
+}	t_img;
 
 typedef struct	s_var
 {
+	t_mlx		*mlx;
+	t_img		*img;
 	t_camera	*camera;
-}				t_var;
+	t_list		*shapes;
+	t_err		err;
+}	t_var;
 
 #endif
