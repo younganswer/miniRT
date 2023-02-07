@@ -9,5 +9,6 @@ t_bool	parse(t_var *var, char *file)
 
 	if (fd == -1)
 		return (FALSE);
-	return (parse_camera(var, fd));
+	return (parse_camera(var, fd) &&
+			parse_shape(var, fd));
 }
