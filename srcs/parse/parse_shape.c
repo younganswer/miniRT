@@ -1,25 +1,28 @@
 #include "../../incs/parse.h"
+#include <stdlib.h>
 
-t_bool		parse_shape(t_var *var, int fd);
-static void	*parse_sphere(char *line);
+t_bool	parse_shape(t_var *var, int fd);
 
 t_bool	parse_shape(t_var *var, int fd)
 {
-	void	*content;
+	t_bool	ret;
+	char	*line;
 
-	content = parse_sphere(NULL);
-	ft_lstadd_back(&var->shapes, ft_lstnew(content));
-	(void) fd;
+	line = get_next_line_not_empty(fd);
+	while (line != NULL)
+	{
+		if (ft_strncmp(line, "sp", 2) == 0)
+			ret = parse_sphere(var, line);
+		else if (ft_strncmp(line, "pl", 2) == 0)
+			ret = parse_plane(var, line);
+		else if (ft_strncmp(line, "cy", 2) == 0)
+			ret = parse_cylinder(var, line);
+		else
+			ret = FALSE;
+		free(line);
+		if (ret == FALSE)
+			return (FALSE);
+		line = get_next_line_not_empty(fd);
+	}
 	return (TRUE);
-}
-
-static void	*parse_sphere(char *line)
-{
-	t_sphere	*ret;
-
-	ret = ft_calloc(sizeof(t_sphere), 1, "Error: Fail to init sphere");
-	ret->center = (t_vec3){0, 0, -3};
-	ret->radius = 1;
-	(void) line;
-	return (ret);
 }
