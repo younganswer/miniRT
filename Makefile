@@ -39,12 +39,19 @@ RM		= rm -f
 SRCS = 	miniRT.c \
 		event/key_event.c \
 		parse/parse.c \
+		parse/parse_ambient_lightning.c \
 		parse/parse_camera.c \
+		parse/parse_light.c \
 		parse/parse_shape.c \
+		parse/parse_sphere.c \
+		parse/parse_plane.c \
+		parse/parse_cylinder.c \
 		ray/ray.c \
 		render/render.c \
 		render/render_shape.c \
-		render/render_sphere.c
+		render/render_sphere.c \
+		render/render_plane.c \
+		render/render_cylinder.c
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
