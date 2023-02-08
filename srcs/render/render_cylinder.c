@@ -1,10 +1,19 @@
 #include "../../incs/render.h"
 
-t_bool	render_cylinder(t_var *var, t_cylinder *cylinder);
+double	hit_cylinder(t_cylinder *cylinder, t_ray ray);
+size_t	get_color_of_cylinder(t_cylinder *cylinder, t_ray ray, double t);
 
-t_bool	render_cylinder(t_var *var, t_cylinder *cylinder)
+double	hit_cylinder(t_cylinder *cylinder, t_ray ray)
 {
-	(void) var;
 	(void) cylinder;
-	return (TRUE);
+	(void) ray;
+	return (0.0);
+}
+
+size_t	get_color_of_cylinder(t_cylinder *cylinder, t_ray ray, double t)
+{
+	(void) cylinder;
+	(void) ray;
+	(void) t;
+	return (0);
 }

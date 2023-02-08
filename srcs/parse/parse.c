@@ -38,9 +38,16 @@ char	*get_next_line_not_empty(int fd)
 
 t_bool	parse_vec3(t_vec3 *vec, char **line)
 {
+	char	*tmp;
 	char	**split;
 
-	split = ft_split(*line, ',');
+	ft_skip_space((const char **)line);
+	tmp = *line;
+	while (**line && **line != ' ')
+		(*line)++;
+	tmp = ft_substr(tmp, 0, *line - tmp);
+	split = ft_split(tmp, ',');
+	free(tmp);
 	if (split == NULL)
 		return (FALSE);
 	if (ft_strslen(split) != 3)

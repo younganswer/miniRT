@@ -12,11 +12,11 @@ t_bool	parse_shape(t_var *var, int fd)
 	while (line != NULL)
 	{
 		if (ft_strncmp(line, "sp", 2) == 0)
-			ret = parse_sphere(var, line);
+			ret = parse_sphere(var, line + 2);
 		else if (ft_strncmp(line, "pl", 2) == 0)
-			ret = parse_plane(var, line);
+			ret = parse_plane(var, line + 2);
 		else if (ft_strncmp(line, "cy", 2) == 0)
-			ret = parse_cylinder(var, line);
+			ret = parse_cylinder(var, line + 2);
 		else
 			ret = FALSE;
 		free(line);

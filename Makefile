@@ -48,7 +48,6 @@ SRCS = 	miniRT.c \
 		parse/parse_cylinder.c \
 		ray/ray.c \
 		render/render.c \
-		render/render_shape.c \
 		render/render_sphere.c \
 		render/render_plane.c \
 		render/render_cylinder.c

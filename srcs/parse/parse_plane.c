@@ -15,6 +15,5 @@ t_bool	parse_plane(t_var *var, char *line)
 	shape->shape = plane;
 	shape->type = PLANE;
 	ft_lstadd_back(&var->shapes, ft_lstnew(shape));
-	(void) line;
 	return (TRUE);
 }

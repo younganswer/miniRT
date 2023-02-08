@@ -2,36 +2,10 @@
 #include "../../incs/ray.h"
 #include <math.h>
 
-t_bool			render_sphere(t_var *var, t_sphere *sphere);
-static double	hit_sphere(t_sphere *sphere, t_ray ray);
-static size_t	get_sphere_color(t_sphere *sphere, t_ray ray, double t);
+double	hit_sphere(t_sphere *sphere, t_ray ray);
+size_t	get_color_of_sphere(t_sphere *sphere, t_ray ray, double t);
 
-t_bool	render_sphere(t_var *var, t_sphere *sphere)
-{
-	int		row;
-	int		col;
-	t_ray	ray;
-	double	t;
-
-	row = 0;
-	while (row < SCREEN_HEIGHT)
-	{
-		col = 0;
-		while (col < SCREEN_WIDTH)
-		{
-			ray = get_ray(var->camera, row, col);
-			t = hit_sphere(sphere, ray);
-			if (0.0 < t)
-				var->img->addr[row * SCREEN_WIDTH + col]
-					= get_sphere_color(sphere, ray, t);
-			col++;
-		}
-		row++;
-	}
-	return (TRUE);
-}
-
-static double	hit_sphere(t_sphere *sphere, t_ray ray)
+double	hit_sphere(t_sphere *sphere, t_ray ray)
 {
 	const t_vec3	oc = vec3_sub(ray.origin, sphere->center);
 	const double	a = vec3_length_squared(ray.direction);
@@ -43,7 +17,7 @@ static double	hit_sphere(t_sphere *sphere, t_ray ray)
 	return ((-half_b - sqrt(discriminant)) / a);
 }
 
-static size_t	get_sphere_color(t_sphere *sphere, t_ray ray, double t)
+size_t	get_color_of_sphere(t_sphere *sphere, t_ray ray, double t)
 {
 	size_t	ret;
 	t_vec3	unit_dir;

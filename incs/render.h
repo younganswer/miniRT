@@ -6,16 +6,16 @@
 // render.c
 int	render(t_var *var);
 
-// render_shape.c
-t_bool	render_shape(t_var *var);
-
 // render_sphere.c
-t_bool	render_sphere(t_var *var, t_sphere *sphere);
+double	hit_sphere(t_sphere *sphere, t_ray ray);
+size_t	get_color_of_sphere(t_sphere *sphere, t_ray ray, double t);
 
 // render_plane.c
-t_bool	render_plane(t_var *var, t_plane *plane);
+double	hit_plane(t_plane *plane, t_ray ray);
+size_t	get_color_of_plane(t_plane *plane, t_ray ray, double t);
 
 // render_cylinder.c
-t_bool	render_cylinder(t_var *var, t_cylinder *cylinder);
+double	hit_cylinder(t_cylinder *cylinder, t_ray ray);
+size_t	get_color_of_cylinder(t_cylinder *cylinder, t_ray ray, double t);
 
 #endif

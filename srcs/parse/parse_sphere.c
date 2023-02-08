@@ -21,6 +21,9 @@ t_bool	parse_sphere(t_var *var, char *line)
 
 static t_bool	parse_radius(double *radius, char **line)
 {
+	ft_skip_space((const char **)line);
 	*radius = ft_atof(*line);
+	while (**line && **line != ' ')
+		(*line)++;
 	return (TRUE);
 }
