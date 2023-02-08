@@ -63,7 +63,11 @@ SRCS =  ft_atoi.c \
 		ft_strncat.c \
 		ft_strappend.c \
 		ft_swap.c \
-		ft_lstindex.c
+		ft_lstindex.c \
+		ft_strslen.c \
+		ft_strsfree.c \
+		ft_skip_space.c \
+		ft_atof.c
 
 SRCS := ${SRCS:%.c=${SRCS_DIR}/%.c}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}

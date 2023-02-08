@@ -10,8 +10,7 @@ int	ft_atoi(const char *str)
 	nbr = 0;
 	sign = 1;
 	i = 0;
-	while (str[i] && ft_is_space(str[i]))
-		i++;
+	ft_skip_space(&str);
 	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
