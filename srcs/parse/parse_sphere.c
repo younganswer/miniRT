@@ -9,8 +9,9 @@ t_bool	parse_sphere(t_var *var, char *line)
 		= ft_calloc(sizeof(t_shape), 1, "Error: Fail to init shape");
 	t_sphere *const	sphere
 		= ft_calloc(sizeof(t_sphere), 1, "Error: Fail to init sphere");
-	if (parse_vec3(&sphere->center, &line) == FALSE ||
-		parse_radius(&sphere->radius, &line) == FALSE ||
+
+	if (parse_vec3(&sphere->center, &line) == FALSE || \
+		parse_radius(&sphere->radius, &line) == FALSE || \
 		parse_vec3(&sphere->color, &line) == FALSE)
 		return (FALSE);
 	shape->shape = sphere;

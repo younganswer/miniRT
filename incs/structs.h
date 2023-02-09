@@ -31,15 +31,15 @@ typedef struct	s_camera
 	double	focal_length;
 	t_vec3	horizontal;
 	t_vec3	vertical;
-	t_vec3	lower_left_corner;
+	t_vec3	higher_left_corner;
 	double	fov;
 }	t_camera;
 
 typedef enum	e_shape_type
 {
-	SPHERE,
-	PLANE,
-	CYLINDER,
+	SPHERE = 0,
+	PLANE = 1,
+	CYLINDER = 2,
 }	t_shape_type;
 
 typedef struct	s_sphere
@@ -59,7 +59,7 @@ typedef struct	s_plane
 typedef struct	s_cylinder
 {
 	t_vec3	center;
-	t_vec3	axis;
+	t_vec3	normal;
 	double	radius;
 	double	height;
 	t_vec3	color;

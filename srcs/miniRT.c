@@ -30,9 +30,10 @@ int	main(int argc, char **argv)
 
 static t_bool	init_var(t_var *var, char *file)
 {
-	return (parse(var, file) &&
-			init_mlx(var) &&
-			init_img(var));
+	return (parse(var, file) && \
+			init_mlx(var) && \
+			init_img(var)
+	);
 }
 
 static t_bool	init_mlx(t_var *var)
@@ -42,7 +43,7 @@ static t_bool	init_mlx(t_var *var)
 	if (var->mlx->mlx == NULL)
 		return (FALSE);
 	var->mlx->window = mlx_new_window(
-		var->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "miniRT");
+			var->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "miniRT");
 	if (var->mlx->window == NULL)
 		return (FALSE);
 	return (TRUE);
@@ -55,8 +56,9 @@ static t_bool	init_img(t_var *var)
 	if (var->img->img == NULL)
 		return (FALSE);
 	var->img->addr = (unsigned int *) mlx_get_data_addr(
-		var->img->img, &var->img->bits_per_pixel,
-		&var->img->size_line, &var->img->endian);
+			var->img->img, &var->img->bits_per_pixel,
+			&var->img->size_line, &var->img->endian
+			);
 	if (var->img->addr == NULL)
 		return (FALSE);
 	return (TRUE);

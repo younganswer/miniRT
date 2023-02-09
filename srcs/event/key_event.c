@@ -1,8 +1,8 @@
 #include "../../incs/event.h"
 #include <stdlib.h>
 
-int key_pressed(int key, t_var *var);
-int key_released(int key, t_var *var);
+int	key_pressed(int key, t_var *var);
+int	key_released(int key, t_var *var);
 
 int	key_pressed(int keycode, t_var *var)
 {

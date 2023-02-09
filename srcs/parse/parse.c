@@ -3,6 +3,7 @@
 #include "../../incs/parse.h"
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdio.h>
 
 t_bool	parse(t_var *var, char *file);
 char	*get_next_line_not_empty(int fd);
@@ -15,10 +16,10 @@ t_bool	parse(t_var *var, char *file)
 	if (fd == -1)
 		return (FALSE);
 	return (
-		parse_ambient_lightning(var, fd) &&
-		parse_camera(var, fd) &&
-		parse_light(var, fd) &&
-		parse_shape(var, fd) &&
+		parse_ambient_lightning(var, fd) && \
+		parse_camera(var, fd) && \
+		parse_light(var, fd) && \
+		parse_shape(var, fd) && \
 		(close(fd) != -1)
 	);
 }
