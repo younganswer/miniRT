@@ -14,17 +14,18 @@ static int		ft_exit(t_var *var);
 
 int	main(int argc, char **argv)
 {
-	t_var	var;
+	t_var	*var;
 
 	if (argc != 2)
 		ft_exit_with_error("Usage: ./miniRT /path_to_rt/scene.rt", INVALID_ARG);
-	if (init_var(&var, argv[1]) == FALSE)
+	var = ft_calloc(sizeof(t_var), 1, "Error: Fail to init var");
+	if (init_var(var, argv[1]) == FALSE)
 		ft_exit_with_error("Error: Fail to init var", GENERIC_ERR);
-	mlx_hook(var.mlx->window, KEY_DESTROY, 0, ft_exit, &var);
-	mlx_hook(var.mlx->window, KEY_PRESSED, 0, key_pressed, &var);
-	mlx_hook(var.mlx->window, KEY_RELEASED, 0, key_released, &var);
-	mlx_loop_hook(var.mlx->mlx, render, &var);
-	mlx_loop(var.mlx->mlx);
+	mlx_hook(var->mlx->window, KEY_DESTROY, 0, ft_exit, var);
+	mlx_hook(var->mlx->window, KEY_PRESSED, 0, key_pressed, var);
+	mlx_hook(var->mlx->window, KEY_RELEASED, 0, key_released, var);
+	mlx_loop_hook(var->mlx->mlx, render, var);
+	mlx_loop(var->mlx->mlx);
 	return (0);
 }
 

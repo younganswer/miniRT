@@ -19,7 +19,7 @@ const static char		*g_identifier[] = {
 static t_bool (*const	g_parse_func[])(t_var *, char **) = {
 	parse_ambient_lightning,
 	parse_camera,
-	parse_light,
+	parse_lights,
 	parse_sphere,
 	parse_plane,
 	parse_cylinder,

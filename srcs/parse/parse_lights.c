@@ -1,9 +1,9 @@
 #include "../../incs/parse.h"
 
-t_bool			parse_light(t_var *var, char **splited);
+t_bool			parse_lights(t_var *var, char **splited);
 static t_bool	parse_ratio(double *ratio, char *s_ratio);
 
-t_bool	parse_light(t_var *var, char **splited)
+t_bool	parse_lights(t_var *var, char **splited)
 {
 	t_light	*light;
 

@@ -41,7 +41,7 @@ SRCS = 	miniRT.c \
 		parse/parse.c \
 		parse/parse_ambient_lightning.c \
 		parse/parse_camera.c \
-		parse/parse_light.c \
+		parse/parse_lights.c \
 		parse/parse_sphere.c \
 		parse/parse_plane.c \
 		parse/parse_cylinder.c \

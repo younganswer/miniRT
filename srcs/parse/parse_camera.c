@@ -2,7 +2,8 @@
 #include <stdio.h>
 
 t_bool			parse_camera(t_var *var, char **splited);
-static t_bool	set_viewport(t_camera *camera, char *fov);
+static t_bool	parse_fov(double *fov, char *s_fov);
+static t_bool	set_viewport(t_camera *camera);
 static t_bool	rotate_tranform(t_camera *camera);
 
 t_bool	parse_camera(t_var *var, char **splited)
@@ -13,13 +14,21 @@ t_bool	parse_camera(t_var *var, char **splited)
 	return (
 		parse_vec3(&var->camera->ray.origin, splited[0]) && \
 		parse_vec3(&var->camera->ray.direction, splited[1]) && \
-		set_viewport(var->camera, splited[2])
+		parse_fov(&var->camera->fov, splited[2]) && \
+		set_viewport(var->camera)
 	);
 }
 
-static t_bool	set_viewport(t_camera *camera, char *fov)
+static t_bool	parse_fov(double *fov, char *s_fov)
 {
-	camera->fov = ft_atof(fov);
+	*fov = ft_atof(s_fov);
+	if (*fov < 0 || *fov > 180)
+		return (FALSE);
+	return (TRUE);
+}
+
+static t_bool	set_viewport(t_camera *camera)
+{
 	camera->ray.direction = vec3_unit(camera->ray.direction);
 	camera->aspect_ratio = (double) SCREEN_WIDTH / SCREEN_HEIGHT;
 	camera->viewport_height = 2.0;
