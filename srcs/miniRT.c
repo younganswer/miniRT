@@ -45,7 +45,7 @@ static t_bool	check_filename(char *file)
 	if (file_len < 3)
 		return (TRUE);
 	ext = file + file_len - 3;
-	return (ft_strncmp(ext, ".rt", 3) != 0);
+	return (ft_strncmp(ext, ".rt", 3) == 0);
 }
 
 static t_bool	init_mlx_and_img(t_var *var)
