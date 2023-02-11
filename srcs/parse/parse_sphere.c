@@ -1,18 +1,20 @@
 #include "../../incs/parse.h"
 
-t_bool			parse_sphere(t_var *var, char *line);
-static t_bool	parse_radius(double *radius, char **line);
+t_bool			parse_sphere(t_var *var, char **splited);
+static t_bool	parse_radius(double *radius, char *s_radius);
 
-t_bool	parse_sphere(t_var *var, char *line)
+t_bool	parse_sphere(t_var *var, char **splited)
 {
-	t_shape *const	shape
-		= ft_calloc(sizeof(t_shape), 1, "Error: Fail to init shape");
-	t_sphere *const	sphere
-		= ft_calloc(sizeof(t_sphere), 1, "Error: Fail to init sphere");
+	t_shape		*shape;
+	t_sphere	*sphere;
 
-	if (parse_vec3(&sphere->center, &line) == FALSE || \
-		parse_radius(&sphere->radius, &line) == FALSE || \
-		parse_vec3(&sphere->color, &line) == FALSE)
+	if (ft_strslen(splited) != 3)
+		return (FALSE);
+	shape = ft_calloc(sizeof(t_shape), 1, "Error: Fail to init shape");
+	sphere = ft_calloc(sizeof(t_sphere), 1, "Error: Fail to init sphere");
+	if (parse_vec3(&sphere->center, splited[0]) == FALSE || \
+		parse_radius(&sphere->radius, splited[1]) == FALSE || \
+		parse_vec3(&sphere->color, splited[2]) == FALSE)
 		return (FALSE);
 	shape->shape = sphere;
 	shape->type = SPHERE;
@@ -20,11 +22,10 @@ t_bool	parse_sphere(t_var *var, char *line)
 	return (TRUE);
 }
 
-static t_bool	parse_radius(double *radius, char **line)
+static t_bool	parse_radius(double *radius, char *s_radius)
 {
-	ft_skip_space((const char **)line);
-	*radius = ft_atof(*line);
-	while (**line && **line != ' ')
-		(*line)++;
+	*radius = ft_atof(s_radius);
+	if (*radius <= 0)
+		return (FALSE);
 	return (TRUE);
 }

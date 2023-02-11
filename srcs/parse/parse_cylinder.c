@@ -1,18 +1,22 @@
 #include "../../incs/parse.h"
 
-t_bool			parse_cylinder(t_var *var, char *line);
-static t_bool	set_radius_height(t_cylinder *cylinder, char **line);
+t_bool			parse_cylinder(t_var *var, char **splited);
+static t_bool	parse_radius_and_height(double *target, char *value);
 
-t_bool	parse_cylinder(t_var *var, char *line)
+t_bool	parse_cylinder(t_var *var, char **splited)
 {
-	t_shape *const	shape
-		= ft_calloc(sizeof(t_shape), 1, "Error: Fail to init shape");
-	t_cylinder *const	cylinder
-		= ft_calloc(sizeof(t_cylinder), 1, "Error: Fail to init cylinder");
-	if (parse_vec3(&cylinder->center, &line) == FALSE || \
-		parse_vec3(&cylinder->normal, &line) == FALSE || \
-		set_radius_height(cylinder, &line) == FALSE || \
-		parse_vec3(&cylinder->color, &line) == FALSE)
+	t_shape		*shape;
+	t_cylinder	*cylinder;
+
+	if (ft_strslen(splited) != 5)
+		return (FALSE);
+	shape = ft_calloc(sizeof(t_shape), 1, "Error: Fail to init shape");
+	cylinder = ft_calloc(sizeof(t_cylinder), 1, "Error: Fail to init cylinder");
+	if (parse_vec3(&cylinder->center, splited[0]) == FALSE || \
+		parse_vec3(&cylinder->normal, splited[1]) == FALSE || \
+		parse_radius_and_height(&cylinder->radius, splited[2]) == FALSE || \
+		parse_radius_and_height(&cylinder->height, splited[3]) == FALSE || \
+		parse_vec3(&cylinder->color, splited[4]) == FALSE)
 		return (FALSE);
 	cylinder->normal = vec3_unit(cylinder->normal);
 	shape->shape = cylinder;
@@ -21,15 +25,10 @@ t_bool	parse_cylinder(t_var *var, char *line)
 	return (TRUE);
 }
 
-static t_bool	set_radius_height(t_cylinder *cylinder, char **line)
+static t_bool	parse_radius_and_height(double *target, char *value)
 {
-	ft_skip_space((const char **)line);
-	cylinder->radius = ft_atof(*line);
-	while (**line && **line != ' ')
-		(*line)++;
-	ft_skip_space((const char **)line);
-	cylinder->height = ft_atof(*line);
-	while (**line && **line != ' ')
-		(*line)++;
+	*target = ft_atof(value);
+	if (*target <= 0)
+		return (FALSE);
 	return (TRUE);
 }

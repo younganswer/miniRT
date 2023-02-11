@@ -4,20 +4,20 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static double (*const	g_get_dist_of_object[3])(t_shape *shape, t_ray ray) = {
-	(double (*const)(t_shape * shape, t_ray ray)) & get_distance_of_sphere,
-	(double (*const)(t_shape * shape, t_ray ray)) & get_distance_of_plane,
-	(double (*const)(t_shape * shape, t_ray ray)) & get_distance_of_cylinder,
+static double (*const	g_get_dist_of_object[3])(void *shape, t_ray ray) = {
+	get_distance_of_sphere,
+	get_distance_of_plane,
+	get_distance_of_cylinder,
 };
 
-static size_t (*const	g_get_color_of_object[3])(t_shape *shape, t_ray ray) = {
-	(size_t (*const)(t_shape * shape, t_ray ray)) & get_color_of_sphere,
-	(size_t (*const)(t_shape * shape, t_ray ray)) & get_color_of_plane,
-	(size_t (*const)(t_shape * shape, t_ray ray)) & get_color_of_cylinder,
+static uint (*const		g_get_color_of_object[3])(void *shape, t_ray ray) = {
+	get_color_of_sphere,
+	get_color_of_plane,
+	get_color_of_cylinder,
 };
 
 int		render(t_var *var);
-size_t	get_color(t_var *var, t_ray ray);
+uint	get_color(t_var *var, t_ray ray);
 
 int	render(t_var *var)
 {
@@ -41,8 +41,7 @@ int	render(t_var *var)
 	return (TRUE);
 }
 
-// Get color of closest object
-size_t	get_color(t_var *var, t_ray ray)
+uint	get_color(t_var *var, t_ray ray)
 {
 	t_list	*tmp;
 	t_shape	*shape;

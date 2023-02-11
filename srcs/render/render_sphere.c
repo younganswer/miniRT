@@ -4,12 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-double			get_distance_of_sphere(t_sphere *sphere, t_ray ray);
-size_t			get_color_of_sphere(t_sphere *sphere, t_ray ray);
+double			get_distance_of_sphere(void *content, t_ray ray);
+uint			get_color_of_sphere(void *content, t_ray ray);
 static double	get_dist(double a, double half_b, double c);
 
-double	get_distance_of_sphere(t_sphere *sphere, t_ray ray)
+double	get_distance_of_sphere(void *content, t_ray ray)
 {
+	t_sphere *const	sphere = (t_sphere *) content;
 	const t_vec3	oc = vec3_sub(ray.origin, sphere->center);
 	const double	a = vec3_dot(ray.direction, ray.direction);
 	const double	half_b = vec3_dot(oc, ray.direction);
@@ -18,13 +19,14 @@ double	get_distance_of_sphere(t_sphere *sphere, t_ray ray)
 	return (get_dist(a, half_b, c));
 }
 
-size_t	get_color_of_sphere(t_sphere *sphere, t_ray ray)
+uint	get_color_of_sphere(void *content, t_ray ray)
 {
-	size_t	ret;
+	t_sphere *const	sphere = (t_sphere *) content;
+	uint			ret;
 
-	ret = (size_t) sphere->color.x;
-	ret = (ret << 8) + (size_t) sphere->color.y;
-	ret = (ret << 8) + (size_t) sphere->color.z;
+	ret = (uint) sphere->color.x;
+	ret = (ret << 8) + (uint) sphere->color.y;
+	ret = (ret << 8) + (uint) sphere->color.z;
 	(void) ray;
 	return (ret);
 }

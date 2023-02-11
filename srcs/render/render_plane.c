@@ -2,14 +2,15 @@
 #include "../../incs/ray.h"
 #include <math.h>
 
-double	get_distance_of_plane(t_plane *plane, t_ray ray);
-size_t	get_color_of_plane(t_plane *plane, t_ray ray);
+double	get_distance_of_plane(void *content, t_ray ray);
+uint	get_color_of_plane(void *content, t_ray ray);
 
-double	get_distance_of_plane(t_plane *plane, t_ray ray)
+double	get_distance_of_plane(void *content, t_ray ray)
 {
-	double	ret;
-	double	denom;
-	double	numer;
+	t_plane *const	plane = (t_plane *) content;
+	double			ret;
+	double			denom;
+	double			numer;
 
 	ret = INF;
 	denom = vec3_dot(plane->normal, ray.direction);
@@ -22,13 +23,14 @@ double	get_distance_of_plane(t_plane *plane, t_ray ray)
 	return (ret);
 }
 
-size_t	get_color_of_plane(t_plane *plane, t_ray ray)
+uint	get_color_of_plane(void *content, t_ray ray)
 {
-	size_t	ret;
+	t_plane *const	plane = (t_plane *) content;
+	uint			ret;
 
-	ret = (size_t) plane->color.x;
-	ret = (ret << 8) + (size_t) plane->color.y;
-	ret = (ret << 8) + (size_t) plane->color.z;
+	ret = (uint) plane->color.x;
+	ret = (ret << 8) + (uint) plane->color.y;
+	ret = (ret << 8) + (uint) plane->color.z;
 	(void) ray;
 	return (ret);
 }

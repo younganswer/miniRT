@@ -6,6 +6,7 @@
 # include "../libs/libray/incs/libray.h"
 # include "err.h"
 
+# define uint unsigned int
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
 // # define SCREEN_WIDTH 1920
@@ -22,6 +23,12 @@ typedef enum	e_x_event
 	KEY_DESTROY = 17,
 }	t_x_event;
 
+typedef struct	s_alight
+{
+	double	ratio;
+	t_vec3	color;
+}	t_alight;
+
 typedef struct	s_camera
 {
 	t_ray	ray;
@@ -35,12 +42,12 @@ typedef struct	s_camera
 	double	fov;
 }	t_camera;
 
-typedef enum	e_shape_type
+typedef struct	s_light
 {
-	SPHERE = 0,
-	PLANE = 1,
-	CYLINDER = 2,
-}	t_shape_type;
+	t_vec3	origin;
+	double	ratio;
+	t_vec3	color;
+}	t_light;
 
 typedef struct	s_sphere
 {
@@ -64,6 +71,13 @@ typedef struct	s_cylinder
 	double	height;
 	t_vec3	color;
 }	t_cylinder;
+
+typedef enum	e_shape_type
+{
+	SPHERE = 0,
+	PLANE = 1,
+	CYLINDER = 2,
+}	t_shape_type;
 
 typedef struct	s_shape
 {
@@ -90,7 +104,9 @@ typedef struct	s_var
 {
 	t_mlx		*mlx;
 	t_img		*img;
+	t_alight	*alight;
 	t_camera	*camera;
+	t_list		*lights;
 	t_list		*shapes;
 	t_err		err;
 }	t_var;

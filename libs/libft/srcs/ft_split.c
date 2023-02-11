@@ -1,77 +1,71 @@
 #include "../incs/libft.h"
 #include <stdlib.h>
 
-char			**ft_split(char const *s, char c);
-static char		*get_word(char const *s, char c, size_t *s_idx);
-static size_t	cnt_words(char const *s, char c);
-static size_t	cnt_word_len(char const *s, char c);
+char			**ft_split(char const *s, const char *delim);
+static size_t	cnt_strs(char const *s, const char *delim);
+static t_bool	get_str(char **dest, char const **s, const char *delim);
+static size_t	get_str_len(char const *s, const char *delim);
 static char		**force_quit(char **res);
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, const char *delim)
 {
 	char	**res;
-	size_t	words_len;
-	size_t	words_idx;
-	size_t	s_idx;
+	size_t	strs_len;
+	size_t	strs_idx;
 
-	words_len = cnt_words(s, c);
-	res = (char **) malloc(sizeof(char *) * (words_len + 1));
+	strs_len = cnt_strs(s, delim);
+	res = (char **) malloc(sizeof(char *) * (strs_len + 1));
 	if (!res || !s)
 		return (0);
-	words_idx = 0;
-	s_idx = 0;
-	while (s[s_idx] && words_idx < words_len)
+	strs_idx = 0;
+	while (*s && strs_idx < strs_len)
 	{
-		while (s[s_idx] && s[s_idx] == c)
-			s_idx++;
-		if (s[s_idx])
-			res[words_idx++] = get_word(s, c, &s_idx);
-		if (!res[words_idx - 1])
-			return (force_quit(res));
+		while (*s && ft_strchr(delim, *s))
+			s++;
+		if (*s)
+			if (get_str(&res[strs_idx], &s, delim) == FALSE)
+				return (force_quit(res));
+		strs_idx++;
 	}
-	res[words_idx] = 0;
+	res[strs_idx] = 0;
 	return (res);
 }
 
-static char	*get_word(char const *s, char c, size_t *s_idx)
+static t_bool	get_str(char **dest, char const **s, const char *delim)
 {
-	char	*res;
-	size_t	word_len;
+	const size_t	str_len = get_str_len(*s, delim);
 
-	word_len = cnt_word_len(&s[*s_idx], c);
-	res = (char *) malloc(sizeof(char) * (word_len + 1));
-	if (!res)
-		return (0);
-	ft_strlcpy(res, &s[*s_idx], word_len + 1);
-	*s_idx += word_len;
-	return (res);
+	*dest = (char *) malloc(sizeof(char) * (str_len + 1));
+	if (*dest == NULL)
+		return (FALSE);
+	ft_strlcpy((char *) *dest, *s, str_len + 1);
+	*s += str_len;
+	return (TRUE);
 }
 
-static size_t	cnt_words(char const *s, char c)
+static size_t	cnt_strs(char const *s, const char *delim)
 {
 	size_t	cnt;
-	size_t	i;
 
 	cnt = 0;
-	i = 0;
-	while (s[i])
+	while (*s)
 	{
-		while (s[i] && s[i] == c)
-			i++;
-		if (s[i])
+		while (*s && ft_strchr(delim, *s))
+			s++;
+		if (*s)
 			cnt++;
-		while (s[i] && s[i] != c)
-			i++;
+		while (*s && ft_strchr(delim, *s) == 0)
+			s++;
 	}
 	return (cnt);
 }
 
-static size_t	cnt_word_len(char const *s, char c)
+static size_t	get_str_len(char const *s, const char *delim)
 {
 	size_t	len;
 
 	len = 0;
-	while (s[len] && s[len] != c)
+	while (s[len] && ft_strchr(delim, s[len]) == 0)
 		len++;
 	return (len);
 }

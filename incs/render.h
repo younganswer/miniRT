@@ -9,15 +9,15 @@
 int	render(t_var *var);
 
 // render_sphere.c
-double	get_distance_of_sphere(t_sphere *sphere, t_ray ray);
-size_t	get_color_of_sphere(t_sphere *sphere, t_ray ray);
+double			get_distance_of_sphere(void *content, t_ray ray);
+unsigned int	get_color_of_sphere(void *content, t_ray ray);
 
 // render_plane.c
-double	get_distance_of_plane(t_plane *plane, t_ray ray);
-size_t	get_color_of_plane(t_plane *plane, t_ray ray);
+double			get_distance_of_plane(void *content, t_ray ray);
+unsigned int	get_color_of_plane(void *content, t_ray ray);
 
 // render_cylinder.c
-double	get_distance_of_cylinder(t_cylinder *cylinder, t_ray ray);
-size_t	get_color_of_cylinder(t_cylinder *cylinder, t_ray ray);
+double			get_distance_of_cylinder(void *content, t_ray ray);
+unsigned int	get_color_of_cylinder(void *content, t_ray ray);
 
 #endif

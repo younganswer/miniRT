@@ -8,8 +8,8 @@
 #include <stdlib.h>
 
 static t_bool	init_var(t_var *var, char *file);
-static t_bool	init_mlx(t_var *var);
-static t_bool	init_img(t_var *var);
+static t_bool	check_filename(char *file);
+static t_bool	init_mlx_and_img(t_var *var);
 static int		ft_exit(t_var *var);
 
 int	main(int argc, char **argv)
@@ -30,13 +30,25 @@ int	main(int argc, char **argv)
 
 static t_bool	init_var(t_var *var, char *file)
 {
-	return (parse(var, file) && \
-			init_mlx(var) && \
-			init_img(var)
+	return (
+		check_filename(file) && \
+		parse(var, file) && \
+		init_mlx_and_img(var)
 	);
 }
 
-static t_bool	init_mlx(t_var *var)
+static t_bool	check_filename(char *file)
+{
+	const size_t	file_len = ft_strlen(file);
+	char			*ext;
+
+	if (file_len < 3)
+		return (TRUE);
+	ext = file + file_len - 3;
+	return (ft_strncmp(ext, ".rt", 3) != 0);
+}
+
+static t_bool	init_mlx_and_img(t_var *var)
 {
 	var->mlx = ft_calloc(sizeof(t_mlx), 1, "Error: Fail to init mlx");
 	var->mlx->mlx = mlx_init();
@@ -46,16 +58,11 @@ static t_bool	init_mlx(t_var *var)
 			var->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "miniRT");
 	if (var->mlx->window == NULL)
 		return (FALSE);
-	return (TRUE);
-}
-
-static t_bool	init_img(t_var *var)
-{
 	var->img = ft_calloc(sizeof(t_img), 1, "Error: Fail to init img");
 	var->img->img = mlx_new_image(var->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (var->img->img == NULL)
 		return (FALSE);
-	var->img->addr = (unsigned int *) mlx_get_data_addr(
+	var->img->addr = (uint *) mlx_get_data_addr(
 			var->img->img, &var->img->bits_per_pixel,
 			&var->img->size_line, &var->img->endian
 			);
@@ -68,4 +75,5 @@ static int	ft_exit(t_var *var)
 {
 	(void) var;
 	exit(0);
+	return (0);
 }
