@@ -12,6 +12,7 @@ static t_bool	check_filename(char *file);
 static t_bool	init_mlx_and_img(t_var *var);
 static int		ft_exit(t_var *var);
 
+// TODO: set err code
 int	main(int argc, char **argv)
 {
 	t_var	*var;
