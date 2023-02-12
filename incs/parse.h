@@ -15,8 +15,8 @@ t_bool	parse_ambient_lightning(t_var *var, char **splited);
 // parse_camera.c
 t_bool	parse_camera(t_var *var, char **splited);
 
-// parse_lights.c
-t_bool	parse_lights(t_var *var, char **splited);
+// parse_light.c
+t_bool	parse_light(t_var *var, char **splited);
 
 // parse_sphere.c
 t_bool	parse_sphere(t_var *var, char **splited);

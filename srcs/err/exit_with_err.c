@@ -15,10 +15,14 @@ int	exit_with_err(t_var *var)
 		ft_exit_with_error("Invalid filename", INVALID_FILENAME);
 	else if (var->err == FAIL_TO_OPEN_FILE)
 		ft_exit_with_error("Fail to open file", FAIL_TO_OPEN_FILE);
+	else if (var->err == INVALID_IDENTIFIER)
+		ft_exit_with_error("Invalid identifier", INVALID_IDENTIFIER);
 	else if (var->err == INVALID_ARG)
 		ft_exit_with_error("Invalid argument", INVALID_ARG);
 	else if (var->err == INVALID_RANGE)
 		ft_exit_with_error("Invalid range", INVALID_RANGE);
+	else if (var->err == DUPLICATED_IDENTIFIER)
+		ft_exit_with_error("Duplicated identifier", DUPLICATED_IDENTIFIER);
 	else
 		ft_exit_with_error("Unknown error", GENERIC_ERR);
 	return (0);

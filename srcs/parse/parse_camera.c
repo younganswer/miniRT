@@ -9,6 +9,8 @@ static t_bool	rotate_tranform(t_camera *camera);
 
 t_bool	parse_camera(t_var *var, char **splited)
 {
+	if (var->camera != NULL)
+		return (set_err(var, DUPLICATED_IDENTIFIER) && FALSE);
 	if (ft_strslen(splited) != 3)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	var->camera = ft_calloc(sizeof(t_camera), 1, "Error: Fail to init camera");

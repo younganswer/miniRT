@@ -20,7 +20,7 @@ const static char		*g_identifier[] = {
 static t_bool (*const	g_parse_func[])(t_var *, char **) = {
 	parse_ambient_lightning,
 	parse_camera,
-	parse_lights,
+	parse_light,
 	parse_sphere,
 	parse_plane,
 	parse_cylinder,
@@ -49,10 +49,10 @@ t_bool	parse(t_var *var, char *file)
 		free(line);
 		if (split == NULL)
 			return (set_err(var, GENERIC_ERR) && FALSE);
-		if (ft_strslen(split) <= 1)
-			return (ft_strsfree(&split) && set_err(var, INVALID_ARG) && FALSE);
+		if ((ft_strslen(split) <= 1) && set_err(var, INVALID_ARG))
+			return (ft_strsfree(&split) && FALSE);
 		if (parse_each_var(var, split) == FALSE)
-			return (ft_strsfree(&split) && set_err(var, GENERIC_ERR) && FALSE);
+			return (ft_strsfree(&split) && FALSE);
 		ft_strsfree(&split);
 	}
 	return (all_var_set_successfully(var));
@@ -96,7 +96,7 @@ static t_bool	parse_each_var(t_var *var, char **split)
 			return (g_parse_func[i](var, split + 1));
 		i++;
 	}
-	return (FALSE);
+	return (set_err(var, INVALID_IDENTIFIER) && FALSE);
 }
 
 static t_bool	all_var_set_successfully(t_var *var)
@@ -104,7 +104,7 @@ static t_bool	all_var_set_successfully(t_var *var)
 	t_list	*tmp;
 	int		shapes[3];
 
-	if (var->alight == NULL || var->camera == NULL || var->lights == NULL)
+	if (var->alight == NULL || var->camera == NULL || var->light == NULL)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	shapes[0] = 0;
 	shapes[1] = 0;

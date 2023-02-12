@@ -17,8 +17,10 @@ typedef enum	e_err
 	GENERIC_ERR = 1,
 	INVALID_FILENAME = 2,
 	FAIL_TO_OPEN_FILE = 3,
-	INVALID_ARG = 4,
-	INVALID_RANGE = 5,
+	INVALID_IDENTIFIER = 4,
+	INVALID_ARG = 5,
+	INVALID_RANGE = 6,
+	DUPLICATED_IDENTIFIER = 7,
 }	t_err;
 
 typedef enum	e_x_event
@@ -115,7 +117,7 @@ typedef struct	s_var
 	t_img		*img;
 	t_alight	*alight;
 	t_camera	*camera;
-	t_list		*lights;
+	t_light		*light;
 	t_list		*shapes;
 	t_err		err;
 }	t_var;
