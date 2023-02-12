@@ -37,6 +37,7 @@ AR		= ar rcs
 RM		= rm -f
 
 SRCS = 	miniRT.c \
+		err/exit_with_err.c \
 		err/set_err.c \
 		event/key_event.c \
 		parse/parse.c \

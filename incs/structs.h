@@ -15,9 +15,10 @@ typedef enum	e_err
 {
 	NO_ERR = 0,
 	GENERIC_ERR = 1,
-	INVALID_FILE = 2,
-	INVALID_ARG = 3,
-	INVALID_RANGE = 4,
+	INVALID_FILENAME = 2,
+	FAIL_TO_OPEN_FILE = 3,
+	INVALID_ARG = 4,
+	INVALID_RANGE = 5,
 }	t_err;
 
 typedef enum	e_x_event
