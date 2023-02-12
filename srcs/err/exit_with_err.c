@@ -12,7 +12,7 @@ int	exit_with_err(t_var *var)
 	if (var->err == GENERIC_ERR)
 		ft_exit_with_error("Generic error", GENERIC_ERR);
 	else if (var->err == INVALID_FILENAME)
-		ft_exit_with_error("Invalid filename", INVALID_FILENAME);
+		ft_exit_with_error("Invalid file name", INVALID_FILENAME);
 	else if (var->err == FAIL_TO_OPEN_FILE)
 		ft_exit_with_error("Fail to open file", FAIL_TO_OPEN_FILE);
 	else if (var->err == INVALID_IDENTIFIER)
