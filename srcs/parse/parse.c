@@ -49,9 +49,9 @@ t_bool	parse(t_var *var, char *file)
 		if (splited == NULL)
 			return (FALSE);
 		if (ft_strslen(splited) <= 1)
-			return (ft_strsfree(&splited) == FALSE);
+			return (ft_strsfree(&splited) && FALSE);
 		if (parse_each_var(var, splited) == FALSE)
-			return (ft_strsfree(&splited) == FALSE);
+			return (ft_strsfree(&splited) && FALSE);
 		ft_strsfree(&splited);
 	}
 	return (all_var_set_successfully(var));
@@ -77,7 +77,7 @@ t_bool	parse_vec3(t_vec3 *vec, char *line)
 	if (splited == NULL)
 		return (FALSE);
 	if (ft_strslen(splited) != 3)
-		return (ft_strsfree((char ***) &splited) == FALSE);
+		return (ft_strsfree((char ***) &splited) && FALSE);
 	vec->x = ft_atof(splited[0]);
 	vec->y = ft_atof(splited[1]);
 	vec->z = ft_atof(splited[2]);

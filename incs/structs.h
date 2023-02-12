@@ -4,13 +4,21 @@
 # include "../libs/libft/incs/libft.h"
 # include "../libs/libvec/incs/vec3.h"
 # include "../libs/libray/incs/libray.h"
-# include "err.h"
 
 # define uint unsigned int
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
 // # define SCREEN_WIDTH 1920
 // # define SCREEN_HEIGHT 1080
+
+typedef enum	e_err
+{
+	NO_ERR = 0,
+	GENERIC_ERR = 1,
+	INVALID_FILE = 2,
+	INVALID_ARG = 3,
+	INVALID_RANGE = 4,
+}	t_err;
 
 typedef enum	e_x_event
 {

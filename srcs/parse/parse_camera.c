@@ -1,29 +1,30 @@
 #include "../../incs/parse.h"
+#include "../../incs/err.h"
 #include <stdio.h>
 
 t_bool			parse_camera(t_var *var, char **splited);
-static t_bool	parse_fov(double *fov, char *s_fov);
+static t_bool	parse_fov(t_var *var, double *fov, char *s_fov);
 static t_bool	set_viewport(t_camera *camera);
 static t_bool	rotate_tranform(t_camera *camera);
 
 t_bool	parse_camera(t_var *var, char **splited)
 {
 	if (ft_strslen(splited) != 3)
-		return (FALSE);
+		return (set_err(var, INVALID_ARG) && FALSE);
 	var->camera = ft_calloc(sizeof(t_camera), 1, "Error: Fail to init camera");
 	return (
 		parse_vec3(&var->camera->ray.origin, splited[0]) && \
 		parse_vec3(&var->camera->ray.direction, splited[1]) && \
-		parse_fov(&var->camera->fov, splited[2]) && \
+		parse_fov(var, &var->camera->fov, splited[2]) && \
 		set_viewport(var->camera)
 	);
 }
 
-static t_bool	parse_fov(double *fov, char *s_fov)
+static t_bool	parse_fov(t_var *var, double *fov, char *s_fov)
 {
 	*fov = ft_atof(s_fov);
 	if (*fov < 0 || *fov > 180)
-		return (FALSE);
+		return (set_err(var, INVALID_RANGE) && FALSE);
 	return (TRUE);
 }
 

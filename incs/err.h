@@ -1,11 +1,9 @@
 #ifndef ERR_H
 # define ERR_H
 
-typedef enum	e_err
-{
-	NO_ERR = 0,
-	GENERIC_ERR = 1,
-	INVALID_ARG = 2,
-}	t_err;
+# include "structs.h"
+
+// set_err.c
+t_bool	set_err(t_var *var, t_err err);
 
 #endif

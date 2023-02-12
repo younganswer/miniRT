@@ -37,6 +37,7 @@ AR		= ar rcs
 RM		= rm -f
 
 SRCS = 	miniRT.c \
+		err/set_err.c \
 		event/key_event.c \
 		parse/parse.c \
 		parse/parse_ambient_lightning.c \
@@ -83,6 +84,7 @@ ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 ${OBJS_DIR}:
 	@echo "Build ${NAME}"
 	@mkdir -p ${OBJS_DIR}
+	@mkdir -p ${OBJS_DIR}/err
 	@mkdir -p ${OBJS_DIR}/event
 	@mkdir -p ${OBJS_DIR}/parse
 	@mkdir -p ${OBJS_DIR}/ray
