@@ -32,5 +32,8 @@ t_hit	hit_object(t_var *var, t_ray ray)
 	}
 	ray.direction = vec3_mul(ray.direction, dist);
 	ret.ray = ray;
+	ret.normal = get_normal(ret.object, vec3_add(ray.origin, ray.direction));
+	if (0 < vec3_dot(ret.normal.direction, ray.direction))
+		ret.normal.direction = vec3_reverse(ret.normal.direction);
 	return (ret);
 }

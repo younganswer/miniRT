@@ -49,15 +49,11 @@ double	get_decimal_part(const char **str)
 	if (str == NULL || *str == NULL)
 		return (0);
 	ret = 0;
-	if (**str == '.')
+	dec = 0.1;
+	while (ft_isdigit(**str))
 	{
-		(*str)++;
-		dec = 0.1;
-		while (ft_isdigit(**str))
-		{
-			ret += (*(*str)++ - '0') * dec;
-			dec *= 0.1;
-		}
+		ret += (*(*str)++ - '0') * dec;
+		dec *= 0.1;
 	}
 	return (ret);
 }

@@ -103,6 +103,7 @@ typedef struct	s_hit
 {
 	t_object	*object;
 	t_ray		ray;
+	t_ray		normal;
 }	t_hit;
 
 typedef struct	s_mlx

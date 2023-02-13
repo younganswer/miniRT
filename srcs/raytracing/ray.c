@@ -28,6 +28,8 @@ t_ray	get_normal(t_object *object, t_vec3 contact)
 {
 	t_ray	ret;
 
+	if (object == NULL)
+		return ((t_ray){(t_vec3){0, 0, 0}, (t_vec3){0, 0, 0}});
 	if (object->shape == SPHERE)
 		ret.direction = vec3_sub(contact, ((t_sphere *)object->object)->center);
 	else if (object->shape == PLANE)

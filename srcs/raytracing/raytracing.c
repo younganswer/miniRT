@@ -12,10 +12,12 @@ uint	phong_reflection(t_var *var, t_hit hit)
 
 	if (hit.object == NULL)
 		return (0);
-	diff = diffuse(var, hit.object, hit.ray);
-	spec = specular(var, hit.object, hit.ray, 0);
+	diff = diffuse(var, hit);
+	ret = diff;
+	spec = specular(var, hit);
 	amb = ambient(var, hit.object);
-	ret = vec3_add(vec3_add(diff, spec), amb);
+	ret = vec3_add(diff, amb);
+	ret = vec3_add(ret, spec);
 	return ((uint)ret.x << 16 | (uint)ret.y << 8 | (uint)ret.z);
 }
 
@@ -23,6 +25,7 @@ t_vec3	get_origin_color(t_object *object)
 {
 	t_vec3	ret;
 
+	ret = (t_vec3){0, 0, 0};
 	if (object->shape == SPHERE)
 		ret = ((t_sphere *)object->object)->color;
 	else if (object->shape == PLANE)

@@ -50,13 +50,11 @@ SRCS = 	miniRT.c \
 		raytracing/raytracing.c \
 		raytracing/ambient.c \
 		raytracing/diffuse.c \
+		raytracing/get_distance.c \
 		raytracing/hit_object.c \
-		raytracing/primary_ray.c \
-		raytracing/sepcular.c \
-		render/render.c \
-		render/render_sphere.c \
-		render/render_plane.c \
-		render/render_cylinder.c
+		raytracing/ray.c \
+		raytracing/specular.c \
+		render/render.c
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}

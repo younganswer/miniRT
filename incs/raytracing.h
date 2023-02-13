@@ -13,7 +13,7 @@ t_vec3	get_origin_color(t_object *object);
 t_vec3	ambient(t_var *var, t_object *object);
 
 // diffuse.c
-t_vec3	diffuse(t_var *var, t_object *object, t_ray ray);
+t_vec3	diffuse(t_var *var, t_hit hit);
 
 // get_distance.c
 double	get_distance_to_sphere(void *object, t_ray ray);
@@ -28,6 +28,6 @@ t_ray	get_normal(t_object *object, t_vec3 contact);
 t_hit	hit_object(t_var *var, t_ray ray);
 
 // specular.c
-t_vec3	specular(t_var *var, t_object *object, t_ray ray, int depth);
+t_vec3	specular(t_var *var, t_hit hit);
 
 #endif
