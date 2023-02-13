@@ -50,6 +50,7 @@ SRCS = 	miniRT.c \
 		raytracing/raytracing.c \
 		raytracing/ambient.c \
 		raytracing/diffuse.c \
+		raytracing/hit_object.c \
 		raytracing/primary_ray.c \
 		raytracing/sepcular.c \
 		render/render.c \

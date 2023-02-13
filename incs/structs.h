@@ -86,18 +86,24 @@ typedef struct	s_cylinder
 	t_vec3	color;
 }	t_cylinder;
 
-typedef enum	e_shape_type
+typedef enum	e_shape
 {
 	SPHERE = 0,
 	PLANE = 1,
 	CYLINDER = 2,
-}	t_shape_type;
-
-typedef struct	s_shape
-{
-	void			*shape;
-	t_shape_type	type;
 }	t_shape;
+
+typedef struct	s_object
+{
+	void	*object;
+	t_shape	shape;
+}	t_object;
+
+typedef struct	s_hit
+{
+	t_object	*object;
+	t_ray		ray;
+}	t_hit;
 
 typedef struct	s_mlx
 {
@@ -121,7 +127,7 @@ typedef struct	s_var
 	t_alight	*alight;
 	t_camera	*camera;
 	t_list		*lights;
-	t_list		*shapes;
+	t_list		*objects;
 	t_err		err;
 }	t_var;
 

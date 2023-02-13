@@ -1,17 +1,20 @@
 #include "../../incs/raytracing.h"
 #include <math.h>
 
-t_vec3			diffuse(t_var *var, t_shape *shape, t_ray ray);
-static t_ray	get_normal(t_shape *shape, t_vec3 contact);
+t_vec3			diffuse(t_var *var, t_hit hit);
 static double	get_diffuse(t_light *light, t_ray normal);
 
-t_vec3	diffuse(t_var *var, t_shape *shape, t_ray ray)
+t_vec3	diffuse(t_var *var, t_hit hit)
 {
-	const t_vec3	contact = vec3_add(ray.origin, ray.direction);
-	const t_ray		normal = get_normal(shape, contact);
-	double			diff;
-	t_list			*tmp;
+	t_vec3	contact;
+	t_ray	normal;
+	double	diff;
+	t_list	*tmp;
 
+	if (hit.object == NULL)
+		return ((t_vec3){0, 0, 0});
+	contact = vec3_add(hit.ray.origin, hit.ray.direction);
+	normal = get_normal(hit.object, contact);
 	diff = 0;
 	tmp = var->lights;
 	while (tmp)
@@ -19,22 +22,7 @@ t_vec3	diffuse(t_var *var, t_shape *shape, t_ray ray)
 		diff += get_diffuse((t_light *)tmp->content, normal);
 		tmp = tmp->next;
 	}
-	return (vec3_mul(get_origin_color(shape), diff));
-}
-
-static t_ray	get_normal(t_shape *shape, t_vec3 contact)
-{
-	t_ray	ret;
-
-	if (shape->type == SPHERE)
-		ret.direction = vec3_sub(contact, ((t_sphere *)shape->shape)->center);
-	else if (shape->type == PLANE)
-		ret.direction = ((t_plane *)shape->shape)->normal;
-	else if (shape->type == CYLINDER) // TODO
-		ret.direction = vec3_sub(contact, ((t_cylinder *)shape->shape)->center);
-	ret.origin = contact;
-	ret.direction = vec3_unit(ret.direction);
-	return (ret);
+	return (vec3_mul(get_origin_color(hit.object), diff));
 }
 
 static double	get_diffuse(t_light *light, t_ray normal)
