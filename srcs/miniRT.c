@@ -44,7 +44,7 @@ static t_bool	check_filename(t_var *var, char *file)
 	char			*ext;
 
 	if (file_len < 3)
-		return (TRUE);
+		return (set_err(var, INVALID_FILENAME) && FALSE);
 	ext = file + file_len - 3;
 	return (
 		ft_strncmp(ext, ".rt", 3) == 0 || \

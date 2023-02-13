@@ -92,7 +92,7 @@ static t_bool	parse_each_var(t_var *var, char **split)
 	i = 0;
 	while (i < 6)
 	{
-		if (ft_strncmp(split[0], g_identifier[i], ft_strlen(split[0])) == 0)
+		if (ft_strcmp(split[0], g_identifier[i]) == 0)
 			return (g_parse_func[i](var, split + 1));
 		i++;
 	}
