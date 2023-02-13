@@ -1,6 +1,6 @@
 #include "../../libs/libmlx/incs/mlx.h"
 #include "../../incs/render.h"
-#include "../../incs/ray.h"
+#include "../../incs/raytracing.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -31,7 +31,7 @@ int	render(t_var *var)
 		while (col < SCREEN_WIDTH)
 		{
 			var->img->addr[row * SCREEN_WIDTH + col]
-				= get_color(var, get_ray(var->camera, row, col));
+				= get_color(var, primary_ray(var->camera, row, col));
 			col++;
 		}
 		row++;

@@ -1,5 +1,5 @@
 #include "../../incs/render.h"
-#include "../../incs/ray.h"
+#include "../../incs/raytracing.h"
 #include <math.h>
 
 double	get_distance_of_plane(void *content, t_ray ray);

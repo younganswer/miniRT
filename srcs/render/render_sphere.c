@@ -1,5 +1,5 @@
 #include "../../incs/render.h"
-#include "../../incs/ray.h"
+#include "../../incs/raytracing.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>

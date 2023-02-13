@@ -5,7 +5,10 @@
 # include "../libs/libvec/incs/vec3.h"
 # include "../libs/libray/incs/libray.h"
 
-# define uint unsigned int
+# ifndef uint
+#  define uint unsigned int
+# endif
+
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
 // # define SCREEN_WIDTH 1920
@@ -117,7 +120,7 @@ typedef struct	s_var
 	t_img		*img;
 	t_alight	*alight;
 	t_camera	*camera;
-	t_light		*light;
+	t_list		*lights;
 	t_list		*shapes;
 	t_err		err;
 }	t_var;

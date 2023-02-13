@@ -47,7 +47,11 @@ SRCS = 	miniRT.c \
 		parse/parse_sphere.c \
 		parse/parse_plane.c \
 		parse/parse_cylinder.c \
-		ray/ray.c \
+		raytracing/raytracing.c \
+		raytracing/ambient.c \
+		raytracing/diffuse.c \
+		raytracing/primary_ray.c \
+		raytracing/sepcular.c \
 		render/render.c \
 		render/render_sphere.c \
 		render/render_plane.c \
@@ -88,7 +92,7 @@ ${OBJS_DIR}:
 	@mkdir -p ${OBJS_DIR}/err
 	@mkdir -p ${OBJS_DIR}/event
 	@mkdir -p ${OBJS_DIR}/parse
-	@mkdir -p ${OBJS_DIR}/ray
+	@mkdir -p ${OBJS_DIR}/raytracing
 	@mkdir -p ${OBJS_DIR}/render
 
 

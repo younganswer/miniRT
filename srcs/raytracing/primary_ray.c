@@ -1,9 +1,8 @@
-#include "../../incs/ray.h"
-#include <stdio.h>
+#include "../../incs/raytracing.h"
 
-t_ray	get_ray(t_camera *camera, int row, int col);
+t_ray	primary_ray(t_camera *camera, int row, int col);
 
-t_ray	get_ray(t_camera *camera, int row, int col)
+t_ray	primary_ray(t_camera *camera, int row, int col)
 {
 	t_ray	ret;
 
@@ -20,5 +19,6 @@ t_ray	get_ray(t_camera *camera, int row, int col)
 				),
 			camera->ray.origin
 			);
+	ret.direction = vec3_unit(ret.direction);
 	return (ret);
 }

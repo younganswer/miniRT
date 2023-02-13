@@ -1,6 +1,10 @@
 #ifndef VEC3_H
 # define VEC3_H
 
+# ifndef uint
+#  define uint unsigned int
+# endif
+
 typedef struct	s_vec3
 {
 	double	x;
@@ -23,5 +27,6 @@ t_vec3	vec3_reverse(t_vec3 vec);
 t_vec3	vec3_unit(t_vec3 vec);
 double	vec3_length(t_vec3 vec);
 double	vec3_length_squared(t_vec3 vec);
+uint	vec3_to_color(t_vec3 vec);
 
 #endif

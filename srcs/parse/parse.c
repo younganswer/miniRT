@@ -104,7 +104,7 @@ static t_bool	all_var_set_successfully(t_var *var)
 	t_list	*tmp;
 	int		shapes[3];
 
-	if (var->alight == NULL || var->camera == NULL || var->light == NULL)
+	if (var->alight == NULL || var->camera == NULL || var->lights == NULL)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	shapes[0] = 0;
 	shapes[1] = 0;

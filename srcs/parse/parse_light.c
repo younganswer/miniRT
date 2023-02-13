@@ -6,16 +6,19 @@ static t_bool	parse_ratio(t_var *var, double *ratio, char *s_ratio);
 
 t_bool	parse_light(t_var *var, char **splited)
 {
-	if (var->light != NULL)
+	t_light	*light;
+
+	if (0 < ft_lstsize(var->lights))
 		return (set_err(var, DUPLICATED_IDENTIFIER) && FALSE);
 	if (ft_strslen(splited) != 3)
 		return (set_err(var, INVALID_ARG) && FALSE);
-	var->light = ft_calloc(sizeof(t_light), 1, "Error: Fail to init light");
-	return (
-		parse_vec3(&var->light->origin, splited[0]) && \
-		parse_ratio(var, &var->light->ratio, splited[1]) && \
-		parse_vec3(&var->light->color, splited[2])
-	);
+	light = ft_calloc(sizeof(t_light), 1, "Failed to allocate memory");
+	ft_lstadd_back(&var->lights, ft_lstnew(light));
+	if (parse_vec3(&light->origin, splited[0]) == FALSE || \
+		parse_ratio(var, &light->ratio, splited[1]) == FALSE || \
+		parse_vec3(&light->color, splited[2] == FALSE))
+		return (set_err(var, INVALID_ARG) && FALSE);
+	return (TRUE);
 }
 
 static t_bool	parse_ratio(t_var *var, double *ratio, char *s_ratio)
