@@ -31,7 +31,7 @@ double	get_distance_to_plane(void *object, t_ray ray)
 		return (ret);
 	numer = vec3_dot(vec3_sub(plane->point, ray.origin), plane->normal);
 	ret = numer / denom;
-	if (ret < 0)
+	if (ret <= 0)
 		return (INF);
 	return (ret);
 }

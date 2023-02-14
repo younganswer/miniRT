@@ -13,7 +13,6 @@ uint	phong_reflection(t_var *var, t_hit hit)
 	if (hit.object == NULL)
 		return (0);
 	diff = diffuse(var, hit);
-	ret = diff;
 	spec = specular(var, hit);
 	amb = ambient(var, hit.object);
 	ret = vec3_add(diff, amb);
