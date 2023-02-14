@@ -43,7 +43,7 @@ static double	get_diffuse_ratio(t_var *var, t_light *light, t_hit hit)
 	if (ret <= 0)
 		return (0);
 	next_hit = hit_object(var, light_ray);
-	if (next_hit.object != NULL)
+	if (next_hit.object != NULL && vec3_length(next_hit.ray.direction) < vec3_length(light_ray.direction))
 		return (0);
 	return (ret);
 }
