@@ -40,6 +40,9 @@ static double	get_specular(t_light *light, t_hit hit)
 		),
 		light_dir.direction
 	);
+	const double	dot = vec3_dot(reflect, vec3_reverse(vec3_unit(hit.ray.direction)));
 
-	return (pow(fmax(0, vec3_dot(reflect, vec3_reverse(hit.ray.direction))), 100));
+	if (dot < 0)
+		return (0);
+	return (pow(fmax(0, dot), 100));
 }
