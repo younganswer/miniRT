@@ -20,7 +20,7 @@ uint	phong_reflection(t_var *var, t_hit hit)
 	ret = vec3_add(ret, spec);
 	if (clamp(&ret) == FALSE)
 		return (0);
-	return ((uint)ret.x << 16 | (uint)ret.y << 8 | (uint)ret.z);
+	return (vec3_to_color(ret));
 }
 
 t_vec3	get_origin_color(t_object *object)
