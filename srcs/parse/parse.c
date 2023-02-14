@@ -115,7 +115,8 @@ static t_bool	all_var_set_successfully(t_var *var)
 		objects[((t_object *)tmp->content)->shape]++;
 		tmp = tmp->next;
 	}
-	if (objects[0] == 0 || objects[1] == 0 || objects[2] == 0)
+	// if (objects[0] == 0 || objects[1] == 0 || objects[2] == 0)
+	if (objects[0] == 0 || objects[1] == 0)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	return (TRUE);
 }
