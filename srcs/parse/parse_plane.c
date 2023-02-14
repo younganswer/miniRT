@@ -1,7 +1,8 @@
 #include "../../incs/parse.h"
 #include "../../incs/err.h"
 
-t_bool	parse_plane(t_var *var, char **splited);
+t_bool			parse_plane(t_var *var, char **splited);
+static t_bool	normal_to_camera(t_var *var, t_vec3 *point, t_vec3 *normal);
 
 t_bool	parse_plane(t_var *var, char **splited)
 {
@@ -17,8 +18,21 @@ t_bool	parse_plane(t_var *var, char **splited)
 		parse_vec3(&plane->color, splited[2]) == FALSE)
 		return (FALSE);
 	plane->normal = vec3_unit(plane->normal);
+	if (normal_to_camera(var, &plane->point, &plane->normal) == FALSE)
+		return (FALSE);
 	object->object = plane;
 	object->shape = PLANE;
 	ft_lstadd_back(&var->objects, ft_lstnew(object));
+	return (TRUE);
+}
+
+static t_bool	normal_to_camera(t_var *var, t_vec3 *point, t_vec3 *normal)
+{
+	const t_vec3	point_to_camera
+		= vec3_unit(vec3_sub(var->camera->ray.origin, *point));
+	const double	dot = vec3_dot(point_to_camera, *normal);
+
+	if (dot < 0)
+		*normal = vec3_reverse(*normal);
 	return (TRUE);
 }
