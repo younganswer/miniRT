@@ -12,7 +12,6 @@ static t_bool	init_mlx(t_var *var);
 static t_bool	init_img(t_var *var);
 
 // TODO: cylinder, anti-aliasing, full-reflection
-
 int	main(int argc, char **argv)
 {
 	t_var	*var;
