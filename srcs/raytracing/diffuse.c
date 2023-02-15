@@ -29,11 +29,8 @@ static double	get_diffuse_ratio(t_var *var, t_light *light, t_hit hit)
 	double	dist_to_light;
 	double	ret;
 
-	normal_ray = (t_ray) {
-		vec3_add(
-			hit.normal.origin,
-			vec3_mul(hit.normal.direction, 0.0001)
-		),
+	normal_ray = (t_ray){
+		vec3_add(hit.normal.origin, vec3_mul(hit.normal.direction, 0.0001)),
 		hit.normal.direction
 	};
 	light_ray = (t_ray){
@@ -45,7 +42,8 @@ static double	get_diffuse_ratio(t_var *var, t_light *light, t_hit hit)
 		return (0);
 	dist_to_light = vec3_length(vec3_sub(light->origin, normal_ray.origin));
 	next_hit = hit_object(var, light_ray);
-	if (next_hit.object != NULL && vec3_length(next_hit.ray.direction) < dist_to_light)
+	if (next_hit.object != NULL && \
+		vec3_length(next_hit.ray.direction) < dist_to_light)
 		return (0);
 	return (ret);
 }

@@ -32,11 +32,13 @@ static t_bool	parse_fov(t_var *var, double *fov, char *s_fov)
 
 static t_bool	set_viewport(t_camera *camera)
 {
+	const double	aspect_ratio = (double) SCREEN_WIDTH / SCREEN_HEIGHT;
+	const double	viewport_height = 2.0;
+	const double	viewport_width = aspect_ratio * viewport_height;
+
 	camera->ray.direction = vec3_unit(camera->ray.direction);
-	camera->aspect_ratio = (double) SCREEN_WIDTH / SCREEN_HEIGHT;
-	camera->viewport_height = 2.0;
-	camera->viewport_width = camera->aspect_ratio * camera->viewport_height;
-	camera->focal_length = 1.0;
+	camera->horizontal = vec3_mul((t_vec3){1, 0, 0}, viewport_width);
+	camera->vertical = vec3_mul((t_vec3){0, 1, 0}, viewport_height);
 	return (rotate_tranform(camera));
 }
 
@@ -53,12 +55,12 @@ static t_bool	rotate_tranform(t_camera *camera)
 	axis_y = vec3_cross(axis_z, axis_x);
 	if (axis_y.y < 0)
 		axis_y = vec3_reverse(axis_y);
-	camera->horizontal = vec3_mul(axis_x, camera->viewport_width);
-	camera->vertical = vec3_mul(axis_y, camera->viewport_height);
+	camera->horizontal = vec3_mul(axis_x, camera->horizontal.x);
+	camera->vertical = vec3_mul(axis_y, camera->vertical.y);
 	camera->higher_left_corner = vec3_add(
 			camera->ray.origin,
 			vec3_add(
-				vec3_mul(axis_z, camera->focal_length),
+				vec3_mul(axis_z, 1),
 				vec3_sub(
 					vec3_div(camera->vertical, 2),
 					vec3_div(camera->horizontal, 2)

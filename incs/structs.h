@@ -46,10 +46,6 @@ typedef struct	s_alight
 typedef struct	s_camera
 {
 	t_ray	ray;
-	double	aspect_ratio;
-	double	viewport_height;
-	double	viewport_width;
-	double	focal_length;
 	t_vec3	horizontal;
 	t_vec3	vertical;
 	t_vec3	higher_left_corner;
