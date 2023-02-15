@@ -1,9 +1,9 @@
 #include "../../incs/raytracing.h"
 
-t_ray	primary_ray(t_camera *camera, int row, int col);
+t_ray	primary_ray(t_camera *camera, double row, double col);
 t_ray	get_normal(t_object *object, t_vec3 contact);
 
-t_ray	primary_ray(t_camera *camera, int row, int col)
+t_ray	primary_ray(t_camera *camera, double row, double col)
 {
 	t_ray	ret;
 
@@ -13,9 +13,9 @@ t_ray	primary_ray(t_camera *camera, int row, int col)
 				camera->higher_left_corner,
 				vec3_sub(
 					vec3_mul(camera->horizontal,
-						(double) col / (SCREEN_WIDTH - 1)),
+						col / (SCREEN_WIDTH - 1)),
 					vec3_mul(camera->vertical,
-						(double) row / (SCREEN_HEIGHT - 1))
+						row / (SCREEN_HEIGHT - 1))
 					)
 				),
 			camera->ray.origin
