@@ -55,6 +55,7 @@ SRCS = 	miniRT.c \
 		raytracing/hit_object.c \
 		raytracing/ray.c \
 		raytracing/specular.c \
+		raytracing/vec3_utils_in_raytracing.c \
 		render/render.c
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}

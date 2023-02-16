@@ -27,7 +27,7 @@ double	get_distance_to_plane(void *object, t_ray ray)
 
 	ret = INF;
 	denom = vec3_dot(plane->normal, ray.direction);
-	if (fabs(denom) <= 1e-6)
+	if (fabs(denom) <= INFSIMAL)
 		return (ret);
 	numer = vec3_dot(vec3_sub(plane->point, ray.origin), plane->normal);
 	ret = numer / denom;

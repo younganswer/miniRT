@@ -2,12 +2,15 @@
 # define RAY_H
 
 # include "structs.h"
+
 # define INF 1e9
 # define EPSILON 1e-4
+# define INFSIMAL 1e-6
 
 // raytracing.c
 t_vec3	phong_reflection(t_var *var, t_hit hit);
 t_vec3	get_origin_color(t_object *object);
+t_ray	handle_shadow_acne(t_ray ray);
 
 // ambient.c
 t_vec3	ambient(t_var *var, t_object *object);
@@ -28,6 +31,10 @@ t_ray	get_normal(t_object *object, t_vec3 contact);
 t_hit	hit_object(t_var *var, t_ray ray);
 
 // specular.c
-t_vec3	specular(t_var *var, t_hit hit);
+t_vec3	specular(t_var *var, t_hit hit, int depth);
+
+// vec3_utils_in_raytracing.c
+uint	vec3_to_color(t_vec3 vec);
+t_vec3	vec3_reflect(t_vec3 vec, t_vec3 normal);
 
 #endif

@@ -29,10 +29,7 @@ static double	get_diffuse_ratio(t_var *var, t_light *light, t_hit hit)
 	double	dist_to_light;
 	double	ret;
 
-	normal_ray = (t_ray){
-		vec3_add(hit.normal.origin, vec3_mul(hit.normal.direction, 0.0001)),
-		hit.normal.direction
-	};
+	normal_ray = handle_shadow_acne(hit.normal);
 	light_ray = (t_ray){
 		normal_ray.origin,
 		vec3_unit(vec3_sub(light->origin, normal_ray.origin))
@@ -43,6 +40,7 @@ static double	get_diffuse_ratio(t_var *var, t_light *light, t_hit hit)
 	dist_to_light = vec3_length(vec3_sub(light->origin, normal_ray.origin));
 	next_hit = hit_object(var, light_ray);
 	if (next_hit.object != NULL && \
+		next_hit.object->shape == PLANE && \
 		vec3_length(next_hit.ray.direction) < dist_to_light)
 		return (0);
 	return (ret);
