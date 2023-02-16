@@ -9,7 +9,7 @@ t_vec3	diffuse(t_var *var, t_hit hit)
 	double	diffuse_ratio;
 	t_list	*tmp;
 
-	if (hit.object == NULL)
+	if (hit.object == NULL || hit.object->shape == SPHERE)
 		return ((t_vec3){0, 0, 0});
 	diffuse_ratio = 0;
 	tmp = var->lights;

@@ -53,5 +53,5 @@ static double	get_specular_ratio(t_light *light, t_hit hit)
 
 	if (hit.object->shape == PLANE)
 		return (fmax(0, dot) * light->ratio);
-	return (pow(fmax(0, dot), 8) * light->ratio);
+	return (pow(fmax(0, dot), 10) * light->ratio);
 }
