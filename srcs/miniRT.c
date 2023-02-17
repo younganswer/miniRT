@@ -2,7 +2,6 @@
 #include "../libs/libmlx/incs/mlx.h"
 #include "../incs/structs.h"
 #include "../incs/parse.h"
-#include "../incs/render.h"
 #include "../incs/err.h"
 #include "../incs/event.h"
 
@@ -24,7 +23,7 @@ int	main(int argc, char **argv)
 	mlx_hook(var->mlx->window, KEY_DESTROY, 0, exit_with_err, var);
 	mlx_hook(var->mlx->window, KEY_PRESSED, 0, key_pressed, var);
 	mlx_hook(var->mlx->window, KEY_RELEASED, 0, key_released, var);
-	mlx_loop_hook(var->mlx->mlx, render, var);
+	//mlx_loop_hook(var->mlx->mlx, render, var);
 	mlx_loop(var->mlx->mlx);
 	return (0);
 }

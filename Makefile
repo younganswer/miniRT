@@ -48,14 +48,6 @@ SRCS = 	miniRT.c \
 		parse/parse_sphere.c \
 		parse/parse_plane.c \
 		parse/parse_cylinder.c \
-		raytracing/raytracing.c \
-		raytracing/ambient.c \
-		raytracing/diffuse.c \
-		raytracing/get_distance.c \
-		raytracing/hit_object.c \
-		raytracing/ray.c \
-		raytracing/specular.c \
-		raytracing/vec3_utils_in_raytracing.c \
 		render/render.c
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
