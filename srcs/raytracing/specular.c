@@ -5,13 +5,12 @@
 
 t_vec3			specular(t_var *var, t_hit hit, int depth);
 static double	get_specular_ratio(t_light *light, t_hit hit);
+static t_ray	get_reflect(t_hit hit);
 
 t_vec3	specular(t_var *var, t_hit hit, int depth)
 {
 	t_vec3	ret;
 	t_list	*tmp;
-	t_light	*light;
-	t_ray	reflect;
 
 	if (hit.object == NULL || depth == 0)
 		return ((t_vec3){0, 0, 0});
@@ -19,19 +18,16 @@ t_vec3	specular(t_var *var, t_hit hit, int depth)
 	tmp = var->lights;
 	while (tmp)
 	{
-		light = tmp->content;
 		if (hit.object->shape == PLANE)
-			ret = vec3_add(ret, vec3_mul(ret, get_specular_ratio(light, hit)));
+			ret = vec3_add(
+					ret,
+					vec3_mul(ret, get_specular_ratio(tmp->content, hit))
+					);
 		else if (hit.object->shape == SPHERE)
-		{
-			reflect = (t_ray) {
-				vec3_add(hit.ray.origin, hit.ray.direction),
-				vec3_unit(vec3_reflect(
-					vec3_reverse(hit.ray.direction), hit.normal.direction))
-			};
-			reflect = handle_shadow_acne(reflect);
-			ret = vec3_matrix(ret, specular(var, hit_object(var, reflect), depth - 1));
-		}
+			ret = vec3_matrix(
+					ret,
+					specular(var, hit_object(var, get_reflect(hit)), depth - 1)
+					);
 		tmp = tmp->next;
 	}
 	return (ret);
@@ -54,4 +50,18 @@ static double	get_specular_ratio(t_light *light, t_hit hit)
 			);
 
 	return (pow(fmax(0, dot), 10) * light->ratio);
+}
+
+static t_ray	get_reflect(t_hit hit)
+{
+	return ((t_ray){
+		handle_shadow_acne(
+			vec3_add(hit.ray.origin, hit.ray.direction),
+			hit.normal.direction
+		),
+		vec3_reflect(
+			vec3_reverse(hit.ray.direction),
+			hit.normal.direction
+		)
+	});
 }

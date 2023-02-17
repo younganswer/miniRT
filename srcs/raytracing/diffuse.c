@@ -29,7 +29,9 @@ static double	get_diffuse_ratio(t_var *var, t_light *light, t_hit hit)
 	double	dist_to_light;
 	double	ret;
 
-	normal_ray = handle_shadow_acne(hit.normal);
+	normal_ray = hit.normal;
+	normal_ray.origin
+		= handle_shadow_acne(normal_ray.origin, normal_ray.direction);
 	light_ray = (t_ray){
 		normal_ray.origin,
 		vec3_unit(vec3_sub(light->origin, normal_ray.origin))

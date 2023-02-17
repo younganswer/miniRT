@@ -10,7 +10,7 @@
 // raytracing.c
 t_vec3	phong_reflection(t_var *var, t_hit hit);
 t_vec3	get_origin_color(t_object *object);
-t_ray	handle_shadow_acne(t_ray ray);
+t_vec3	handle_shadow_acne(t_vec3 origin, t_vec3 direction);
 
 // ambient.c
 t_vec3	ambient(t_var *var, t_object *object);
