@@ -50,7 +50,7 @@ static t_bool	rotate_tranform(t_camera *camera)
 
 	axis_z = vec3_unit(camera->ray.direction);
 	axis_x = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, axis_z));
-	if (axis_x.x < 0)
+	if ((0 < axis_z.z && 0 < axis_x.x) || (axis_z.z < 0 && axis_x.x < 0))
 		axis_x = vec3_reverse(axis_x);
 	axis_y = vec3_cross(axis_z, axis_x);
 	if (axis_y.y < 0)
