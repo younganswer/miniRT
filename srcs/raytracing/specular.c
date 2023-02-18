@@ -16,12 +16,14 @@ t_vec3	specular(t_var *var, t_hit hit, int depth)
 		return ((t_vec3){0, 0, 0});
 	ret = get_origin_color(hit.object);
 	tmp = var->lights;
+	if (hit.object->shape == PLANE && depth == 5)
+		return (vec3_mul(ret, get_specular_ratio(tmp->content, hit)));
 	while (tmp)
 	{
 		if (hit.object->shape == PLANE)
 			ret = vec3_add(
 					ret,
-					vec3_mul(ret, get_specular_ratio(tmp->content, hit))
+					diffuse(var, hit_object(var, get_reflect(hit)))
 					);
 		else if (hit.object->shape == SPHERE)
 			ret = vec3_matrix(
