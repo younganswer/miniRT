@@ -11,6 +11,7 @@ t_vec3	specular(t_var *var, t_hit hit, int depth)
 {
 	t_vec3	ret;
 	t_list	*tmp;
+	t_hit	next_hit;
 
 	if (hit.object == NULL || depth == 0)
 		return ((t_vec3){0, 0, 0});
@@ -20,16 +21,11 @@ t_vec3	specular(t_var *var, t_hit hit, int depth)
 		return (vec3_mul(ret, get_specular_ratio(tmp->content, hit)));
 	while (tmp)
 	{
+		next_hit = hit_object(var, get_reflect(hit));
 		if (hit.object->shape == PLANE)
-			ret = vec3_add(
-					ret,
-					diffuse(var, hit_object(var, get_reflect(hit)))
-					);
+			ret = vec3_add(ret, diffuse(var, next_hit));
 		else if (hit.object->shape == SPHERE)
-			ret = vec3_matrix(
-					ret,
-					specular(var, hit_object(var, get_reflect(hit)), depth - 1)
-					);
+			ret = vec3_matrix(ret, specular(var, next_hit, depth - 1));
 		tmp = tmp->next;
 	}
 	return (ret);
