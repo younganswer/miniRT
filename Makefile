@@ -31,7 +31,7 @@ SRCS_DIR	= srcs
 OBJS_DIR	= objs
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${LIBGNL_INCS_DIR} -I${LIBVEC_INCS_DIR} -I${LIBMLX_INCS_DIR} -MD -O3
+CFLAGS	= -g -Wall -Wextra -Werror -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${LIBGNL_INCS_DIR} -I${LIBVEC_INCS_DIR} -I${LIBMLX_INCS_DIR} -MD -O3
 LDFLAGS	= -L${LIBFT_DIR} -lft -L${LIBGNL_DIR} -lgnl -L${LIBVEC_DIR} -lvec -L${LIBRAY_DIR} -lray -L${LIBMLX_DIR} -lmlx -framework OpenGL -framework AppKit
 LDFLAGS += -fsanitize=address
 AR		= ar rcs
