@@ -18,7 +18,7 @@ t_vec3	diffuse(t_var *var, t_hit hit)
 		diffuse_ratio += get_diffuse_ratio(var, tmp->content, hit);
 		tmp = tmp->next;
 	}
-	return (vec3_mul(get_origin_color(hit.object), diffuse_ratio));
+	return (vec3_mul(get_origin_color(hit.object), diffuse_ratio / 256.0));
 }
 
 static double	get_diffuse_ratio(t_var *var, t_light *light, t_hit hit)

@@ -2,9 +2,9 @@
 #include "../../incs/render.h"
 #include "../../incs/raytracing.h"
 
-const size_t	g_samples = 25;
-const size_t	g_row = 5;
-const size_t	g_col = 5;
+const int		g_samples = 25;
+const int		g_row = 5;
+const int		g_col = 5;
 const double	g_weight[5][5] = {
 {1.0, 4.0, 6.0, 4.0, 1.0},
 {4.0, 16.0, 24.0, 16.0, 4.0},
@@ -12,7 +12,7 @@ const double	g_weight[5][5] = {
 {4.0, 16.0, 24.0, 16.0, 4.0},
 {1.0, 4.0, 6.0, 4.0, 1.0}
 };
-const double	g_offset = 0.2;
+const double	g_offset = 0.3;
 const double	g_whole_weight = 256.0;
 
 int				render(t_var *var);
@@ -45,7 +45,7 @@ uint	anti_aliasing(t_var *var, double row, double col)
 
 	i = -1;
 	color = (t_vec3){0, 0, 0};
-	while ((size_t)++i < g_samples)
+	while (++i < g_samples)
 		color = vec3_add(color, get_color(var, row, col, i));
 	if (clamp(&color, 0, 255) == FALSE)
 		return (0);

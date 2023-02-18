@@ -15,7 +15,7 @@ t_vec3	phong_reflection(t_var *var, t_hit hit)
 	diff = diffuse(var, hit);
 	spec = specular(var, hit, 5);
 	amb = ambient(var, hit.object);
-	return (vec3_add(vec3_add(diff, spec), amb));
+	return (vec3_mul(vec3_add(vec3_add(diff, spec), amb), 256.0));
 }
 
 t_vec3	get_origin_color(t_object *object)

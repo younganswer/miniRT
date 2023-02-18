@@ -5,7 +5,7 @@
 
 # define INF 1e9
 # define EPSILON 1e-4
-# define INFSIMAL 1e-6
+# define INFSIMAL 1e-9
 
 // raytracing.c
 t_vec3	phong_reflection(t_var *var, t_hit hit);

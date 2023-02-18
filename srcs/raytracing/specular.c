@@ -24,13 +24,13 @@ t_vec3	specular(t_var *var, t_hit hit, int depth)
 			ret = vec3_add(ret, get_specular(tmp->content, hit));
 		else if (hit.object->shape == PLANE && depth < 5)
 			ret = vec3_add(
-					vec3_add(ret, diffuse(var, hit)),
-					diffuse(var, next_hit));
+					ret,
+					vec3_div(vec3_add(diffuse(var, hit), diffuse(var, next_hit)), 2.0));
 		else if (hit.object->shape == SPHERE)
 			ret = vec3_add(
 					ret, vec3_matrix(
-						get_origin_color(hit.object),
-						specular(var, next_hit, depth - 1)));
+						vec3_div(get_origin_color(hit.object), 256.0),
+						vec3_mul(specular(var, next_hit, depth - 1), 7.0)));
 		tmp = tmp->next;
 	}
 	return (ret);
@@ -54,9 +54,9 @@ static t_vec3	get_specular(t_light *light, t_hit hit)
 			vec3_unit(reflect),
 			vec3_reverse(vec3_unit(hit.ray.direction))
 			);
-	const t_vec3	color = get_origin_color(hit.object);
+	const double	ratio = pow(fmax(0, dot), 10) * light->ratio / 256;
 
-	return (vec3_mul(color, pow(fmax(0, dot), 10) * light->ratio));
+	return (vec3_mul(get_origin_color(hit.object), ratio));
 }
 
 static t_ray	get_reflect(t_hit hit)
