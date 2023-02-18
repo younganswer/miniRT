@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 t_vec3			specular(t_var *var, t_hit hit, int depth);
-static double	get_specular_ratio(t_light *light, t_hit hit);
+static t_vec3	get_specular(t_light *light, t_hit hit);
 static t_ray	get_reflect(t_hit hit);
 
 t_vec3	specular(t_var *var, t_hit hit, int depth)
@@ -13,27 +13,35 @@ t_vec3	specular(t_var *var, t_hit hit, int depth)
 	t_list	*tmp;
 	t_hit	next_hit;
 
+	ret = (t_vec3){0, 0, 0};
 	if (hit.object == NULL || depth == 0)
-		return ((t_vec3){0, 0, 0});
-	ret = get_origin_color(hit.object);
+		return (ret);
 	tmp = var->lights;
 	while (tmp)
 	{
 		next_hit = hit_object(var, get_reflect(hit));
 		if (hit.object->shape == PLANE && depth == 5)
-			ret = vec3_add(ret, vec3_mul(get_origin_color(hit.object), get_specular_ratio(tmp->content, hit)));
+			ret = vec3_add(ret, get_specular(tmp->content, hit));
 		else if (hit.object->shape == PLANE && depth < 5)
-			ret = vec3_add(ret, diffuse(var, next_hit));
+			ret = vec3_add(
+					vec3_add(ret, diffuse(var, hit)),
+					diffuse(var, next_hit));
 		else if (hit.object->shape == SPHERE)
-			ret = vec3_matrix(ret, specular(var, next_hit, depth - 1));
+			ret = vec3_add(
+					ret, vec3_matrix(
+						get_origin_color(hit.object),
+						specular(var, next_hit, depth - 1)));
 		tmp = tmp->next;
 	}
 	return (ret);
 }
 
-static double	get_specular_ratio(t_light *light, t_hit hit)
+static t_vec3	get_specular(t_light *light, t_hit hit)
 {
-	const t_vec3	contact = vec3_add(hit.ray.origin, hit.ray.direction);
+	const t_vec3	contact = handle_shadow_acne(
+			vec3_add(hit.ray.origin, hit.ray.direction),
+			hit.normal.direction
+			);
 	const t_ray		light_ray = (t_ray){
 		contact,
 		vec3_sub(light->origin, contact)
@@ -46,8 +54,9 @@ static double	get_specular_ratio(t_light *light, t_hit hit)
 			vec3_unit(reflect),
 			vec3_reverse(vec3_unit(hit.ray.direction))
 			);
+	const t_vec3	color = get_origin_color(hit.object);
 
-	return (pow(fmax(0, dot), 10) * light->ratio);
+	return (vec3_mul(color, pow(fmax(0, dot), 10) * light->ratio));
 }
 
 static t_ray	get_reflect(t_hit hit)
