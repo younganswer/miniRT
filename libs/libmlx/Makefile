@@ -1,10 +1,9 @@
 SHELL	= /bin/bash
-SPINNER	= /-\|/
 IDX		= 0
 
 NAME	:= libmlx.a
 CC		:= cc
-CFLAGS	:= -O3
+CFLAGS	:= -I{INCS_DIR} -MD -O3
 # add to match string put with X11 in size and position
 CFLAGS	+= -DSTRINGPUTX11
 CFLAGS	+= -Wno-deprecated-declarations
@@ -20,20 +19,25 @@ SRCS	:=	mlx_shaders.c \
 			mlx_init_loop.m \
 			mlx_new_image.m \
 			mlx_xpm.c \
-			mlx_int_str_to_wordtab.c
+			mlx_int_str_to_wordtab.c \
 SRCS	+=	mlx_png.c \
 			mlx_mouse.m
 
 SRCS	:= ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS	:= ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
 OBJS	:= ${OBJS:${SRCS_DIR}/%.m=${OBJS_DIR}/%.o}
+DEPS	:= ${SRCS:${OBJS_DIR}/%.o=${OBJS_DIR}/%.d}
+
+SRCS_LEN	:= ${shell echo ${SRCS} | wc -w}
 
 
 all: ${NAME}
 
 
 ${NAME}: ${OBJS}
-	@printf "\bdone\n"
+	@if [ ${IDX} -gt 0 ]; then\
+		printf "\b"; echo "done ";\
+	fi
 	@${AR} ${NAME} ${OBJS}
 	@echo "Build ${NAME}: done"
 
@@ -45,22 +49,20 @@ ${OBJS_DIR}:
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 	${eval IDX = ${shell expr ${IDX} + 1}}
-	${eval T_IDX = ${shell expr ${IDX} % 32}}
-	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
-	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
-	@if [ ${IDX} = 1 ]; then echo -n "Build dependencies in ${NAME} ...  "; fi
-	@printf "\b${CHR}"
-	@${CC} ${CFLAGS} -c $< -o $@ -I ${INCS_DIR}
+	@if [ ${IDX} = 1 ]; then\
+		echo -n "Build dependencies in ${NAME} ...  ";\
+	fi
+	@printf "%3d%%\b\b\b\b" ${shell expr ${IDX} \* 100 / ${SRCS_LEN}}
+	@${CC} ${CFLAGS} -c $< -o $@
 
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.m | ${OBJS_DIR}
 	${eval IDX = ${shell expr ${IDX} + 1}}
-	${eval T_IDX = ${shell expr ${IDX} % 32}}
-	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
-	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
-	@if [ ${IDX} = 1 ]; then echo -n "Build dependencies in ${NAME} ...  "; fi
-	@printf "\b${CHR}"
-	@${CC} ${CFLAGS} -c $< -o $@ -I ${INCS_DIR}
+	@if [ ${IDX} = 1 ]; then\
+		echo -n "Build dependencies in ${NAME} ...  ";\
+	fi
+	@printf "%3d%%\b\b\b\b" ${shell expr ${IDX} \* 100 / ${SRCS_LEN}}
+	@${CC} ${CFLAGS} -c $< -o $@
 
 
 clean:
@@ -80,3 +82,7 @@ re:
 
 
 .PHONY: all clean fclean re
+
+.NONPARALLEL: all clean fclean re
+
+-include ${DEPS}

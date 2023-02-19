@@ -1,5 +1,4 @@
 SHELL	= /bin/bash
-SPINNER	= /-\|/
 IDX		= 0
 
 NAME	= libvec.a
@@ -9,7 +8,7 @@ SRCS_DIR	= srcs
 OBJS_DIR	= objs
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${LIBGNL_INCS_DIR} -I${INCS_DIR} -MD -O3
+CFLAGS	= -Wall -Wextra -Werror -I{INCS_DIR} -MD -O3
 AR		= ar rcs
 RM		= rm -f
 
@@ -21,25 +20,26 @@ SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
 DEPS := ${OBJS:.o=.d}
 
+SRCS_LEN = ${shell echo ${SRCS} | wc -w}
+
 
 all: ${NAME}
 
 
 ${NAME}: ${OBJS}
-	@printf "\bdone\n"
+	@if [ ${IDX} -gt 0 ]; then\
+		printf "\b"; echo "done ";\
+	fi
 	@${AR} ${NAME} ${OBJS}
 	@echo "Build ${NAME}: done"
 
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 	${eval IDX = ${shell expr ${IDX} + 1}}
-	${eval T_IDX = ${shell expr ${IDX} % 32}}
-	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
-	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
 	@if [ ${IDX} = 1 ]; then\
 		echo -n "Build dependencies in ${NAME} ...  ";\
 	fi
-	@printf "\b${CHR}"
+	@printf "%3d%%\b\b\b\b" ${shell expr ${IDX} \* 100 / ${SRCS_LEN}}
 	@${CC} ${CFLAGS} -g -c $< -o $@
 
 
@@ -67,7 +67,8 @@ re:
 	@${MAKE} all
 
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
 
+.NONPARALLEL: all clean fclean re
 
 -include ${DEPS}

@@ -1,5 +1,4 @@
 SHELL	= /bin/bash
-SPINNER	= /-\|/
 IDX		= 0
 
 NAME	= miniRT
@@ -87,6 +86,8 @@ SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
 DEPS := ${OBJS:.o=.d}
 
+SRCS_LEN	= ${shell echo ${SRCS} | wc -w}
+
 IS_MANDATORY	= ${OBJS_DIR}/is_mandatory
 IS_BONUS		= ${OBJS_DIR}/is_bonus
 
@@ -111,7 +112,7 @@ ${IS_BONUS}:
 
 ${NAME}: ${OBJS}
 	@if [ ${IDX} -gt 0 ]; then\
-		printf "\b"; echo "done";\
+		printf "\b"; echo "done ";\
 	fi
 	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS}
 	@echo "Build ${NAME}: done"
@@ -122,14 +123,10 @@ ${OBJS}: ${LIBMLX}
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIRS}
 	${eval IDX = ${shell expr ${IDX} + 1}}
-	${eval T_IDX = ${shell expr ${IDX} % 32}}
-	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
-	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
-	${eval DONE = 1}
 	@if [ ${IDX} = 1 ]; then\
 		echo -n "Build dependencies in ${NAME} ...  ";\
 	fi
-	@printf "\b${CHR}"
+	@printf "%3d%%\b\b\b\b" ${shell expr ${IDX} \* 100 / ${SRCS_LEN}}
 	@${CC} ${CFLAGS} -g -c $< -o $@
 
 
