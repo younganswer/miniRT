@@ -62,7 +62,7 @@ static t_vec3	get_color(t_var *var, double row, double col, int idx)
 			col + (col_offset - g_col / 2) * g_offset
 			);
 	const t_hit		hit = hit_object(var, ray);
-	const t_vec3	ret = phong_reflection(var, hit);
+	const t_vec3	ret = raytracing(var, hit);
 
 	return (vec3_mul(ret, g_weight[row_offset][col_offset] / g_whole_weight));
 }

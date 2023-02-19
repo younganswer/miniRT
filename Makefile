@@ -45,6 +45,8 @@ SRCS = 	miniRT.c \
 		raytracing/diffuse.c \
 		raytracing/get_distance.c \
 		raytracing/hit_object.c \
+		raytracing/mirror_reflection.c \
+		raytracing/phong_reflection.c \
 		raytracing/ray.c \
 		raytracing/specular.c \
 		raytracing/vec3_utils_in_raytracing.c \

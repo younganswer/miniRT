@@ -1,21 +1,12 @@
 #include "../../incs/raytracing.h"
 
-t_vec3	phong_reflection(t_var *var, t_hit hit);
+t_vec3	raytracing(t_var *var, t_hit hit);
 t_vec3	get_origin_color(t_object *object);
 t_vec3	handle_shadow_acne(t_vec3 origin, t_vec3 direction);
 
-t_vec3	phong_reflection(t_var *var, t_hit hit)
+t_vec3	raytracing(t_var *var, t_hit hit)
 {
-	t_vec3	diff;
-	t_vec3	spec;
-	t_vec3	amb;
-
-	if (hit.object == NULL)
-		return ((t_vec3){0, 0, 0});
-	diff = diffuse(var, hit);
-	spec = specular(var, hit, 5);
-	amb = ambient(var, hit.object);
-	return (vec3_mul(vec3_add(vec3_add(diff, spec), amb), 256.0));
+	return (phong_reflection(var, hit));
 }
 
 t_vec3	get_origin_color(t_object *object)
