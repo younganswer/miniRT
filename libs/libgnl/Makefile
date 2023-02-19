@@ -17,9 +17,10 @@ SRCS =  get_next_line.c \
 
 SRCS := ${SRCS:%.c=${SRCS_DIR}/%.c}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
-DEPS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.d}
+DEPS := ${OBJS:.o=.d}
 
 SRCS_LEN	= ${shell echo ${SRCS} | wc -w}
+
 
 all: ${NAME}
 

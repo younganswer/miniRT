@@ -26,7 +26,7 @@ SRCS	+=	mlx_png.c \
 SRCS	:= ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS	:= ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
 OBJS	:= ${OBJS:${SRCS_DIR}/%.m=${OBJS_DIR}/%.o}
-DEPS	:= ${OBJS:${OBJS_DIR}/%.o=${OBJS_DIR}/%.d}
+DEPS	:= ${OBJS:.o=.d}
 
 SRCS_LEN	:= ${shell echo ${SRCS} | wc -w}
 
