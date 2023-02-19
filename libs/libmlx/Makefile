@@ -43,7 +43,7 @@ ${NAME}: ${OBJS}
 
 
 ${OBJS_DIR}:
-	@echo "Build libmlx.a"
+	@echo "Build ${NAME}"
 	@mkdir -p $@
 	
 
@@ -66,17 +66,17 @@ ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.m | ${OBJS_DIR}
 
 
 clean:
-	@echo "Remove dependencies in libmlx.a"
+	@echo "Remove dependencies in ${NAME}"
 	@${RM} -r ${OBJS_DIR}
 
 
 fclean: clean
-	@echo "Remove libmlx.a"
+	@echo "Remove ${NAME}"
 	@${RM} ${NAME}
 
 
 re:
-	@echo "Rebuild libmlx.a"
+	@echo "Re-build ${NAME}"
 	@${MAKE} fclean
 	@${MAKE} all
 
