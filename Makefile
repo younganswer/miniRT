@@ -79,7 +79,7 @@ else
 endif
 
 ifdef SANITIZE
-	CFLAGS += -fsanitize=address
+	LDFLAGS += -fsanitize=address
 endif
 
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
@@ -92,30 +92,32 @@ IS_MANDATORY	= ${OBJS_DIR}/is_mandatory
 IS_BONUS		= ${OBJS_DIR}/is_bonus
 
 
-all: ${IS_MANDATORY}
+all:
+	@${MAKE} ${IS_MANDATORY}
 
 
-bonus: ${IS_BONUS}
+bonus:
+	@${MAKE} BONUS=1 ${IS_BONUS}
 
 
-${IS_MANDATORY}:
-	@${RM} ${NAME} ${IS_BONUS}
-	@${MAKE} ${NAME}
-	@touch ${IS_MANDATORY}
-
-
-${IS_BONUS}:
-	@${RM} ${NAME} ${IS_MANDATORY}
-	@${MAKE} BONUS=1 ${NAME}
-	@touch ${IS_BONUS}
-
-
-${NAME}: ${OBJS}
+${IS_MANDATORY}: ${OBJS}
+	@${RM} ${IS_BONUS}
 	@if [ ${IDX} -gt 0 ]; then\
 		printf "\b"; echo "done ";\
 	fi
 	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS}
 	@echo "Build ${NAME}: done"
+	@touch ${IS_MANDATORY}
+
+
+${IS_BONUS}: ${OBJS}
+	@${RM} ${IS_MANDATORY}
+	@if [ ${IDX} -gt 0 ]; then\
+		printf "\b"; echo "done ";\
+	fi
+	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS}
+	@echo "Build ${NAME}: done"
+	@touch ${IS_BONUS}
 
 
 ${OBJS}: ${LIBMLX}
@@ -160,29 +162,29 @@ ${LIBMLX}: ${LIBRAY}
 
 
 clean:
-	@echo "Remove dependencies in ${NAME}"
 	@${MAKE} -C ${LIBFT_DIR} clean
 	@${MAKE} -C ${LIBGNL_DIR} clean
 	@${MAKE} -C ${LIBVEC_DIR} clean
 	@${MAKE} -C ${LIBRAY_DIR} clean
 	@${MAKE} -C ${LIBMLX_DIR} clean
-	@rm -rf ${OBJS_DIR}
+	@echo "Remove dependencies in ${NAME}"
+	@${RM} -r ${OBJS_DIR}
 
 
 fclean:
-	@echo "Remove dependencies in ${NAME}"
 	@${MAKE} -C ${LIBFT_DIR} fclean
 	@${MAKE} -C ${LIBGNL_DIR} fclean
 	@${MAKE} -C ${LIBVEC_DIR} fclean
 	@${MAKE} -C ${LIBRAY_DIR} fclean
 	@${MAKE} -C ${LIBMLX_DIR} fclean
+	@echo "Remove dependencies in ${NAME}"
+	@${RM} -r ${OBJS_DIR}
 	@echo "Remove ${NAME}"
-	@rm -rf ${OBJS_DIR}
 	@${RM} ${NAME}
 	
 
 re:
-	@echo "Re-build ${NAME}"
+	@echo "Rebuild ${NAME}"
 	@${MAKE} fclean
 	@${MAKE} all
 

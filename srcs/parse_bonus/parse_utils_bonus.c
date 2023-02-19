@@ -15,13 +15,23 @@ t_bool	parse_type(t_type *type, char *line);
 char	*get_next_line_not_empty(int fd)
 {
 	char	*ret;
+	char	*tmp;
 
-	ret = get_next_line(fd);
-	while (ret && *ret == '\n')
+	tmp = get_next_line(fd);
+	while (tmp && *tmp == '\n')
 	{
-		free(ret);
-		ret = get_next_line(fd);
+		free(tmp);
+		tmp = get_next_line(fd);
 	}
+	if (tmp == NULL)
+		return (NULL);
+	if (tmp[ft_strlen(tmp) - 1] == '\n')
+	{
+		ret = ft_substr(tmp, 0, ft_strlen(tmp) - 1);
+		free(tmp);
+	}
+	else
+		ret = tmp;
 	return (ret);
 }
 
@@ -48,7 +58,6 @@ t_bool	parse_type(t_type *type, char *line)
 		*type = LAMBERTIAN;
 		return (TRUE);
 	}
-	ft_putendl_fd(line, 2);
 	i = 0;
 	while (i < 2)
 	{

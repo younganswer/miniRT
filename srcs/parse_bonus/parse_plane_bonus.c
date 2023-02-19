@@ -9,7 +9,7 @@ t_bool	parse_plane(t_var *var, char **splited)
 	t_object	*object;
 	t_plane		*plane;
 
-	if (ft_strslen(splited) != 3 || ft_strslen(splited) != 4)
+	if (ft_strslen(splited) != 3 && ft_strslen(splited) != 4)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	object = ft_calloc(sizeof(t_object), 1, "Error: Fail to init object");
 	plane = ft_calloc(sizeof(t_plane), 1, "Error: Fail to init plane");

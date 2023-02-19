@@ -62,7 +62,7 @@ fclean:
 	
 
 re:
-	@echo "Re-build ${NAME}"
+	@echo "Rebuild ${NAME}"
 	@${MAKE} fclean
 	@${MAKE} all
 

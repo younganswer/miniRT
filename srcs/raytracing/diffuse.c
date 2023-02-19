@@ -1,24 +1,19 @@
 #include "../../incs/raytracing.h"
 #include <math.h>
 
-t_vec3			diffuse(t_var *var, t_hit hit);
+t_vec3			diffuse(t_var *var, t_light *light, t_hit hit);
 static double	get_diffuse_ratio(t_var *var, t_light *light, t_hit hit);
 
-t_vec3	diffuse(t_var *var, t_hit hit)
+t_vec3	diffuse(t_var *var, t_light *light, t_hit hit)
 {
-	double	diffuse_ratio;
-	t_list	*tmp;
-
-	if (hit.object == NULL || hit.object->shape == SPHERE)
+	if (hit.object == NULL)
 		return ((t_vec3){0, 0, 0});
-	diffuse_ratio = 0;
-	tmp = var->lights;
-	while (tmp)
-	{
-		diffuse_ratio += get_diffuse_ratio(var, tmp->content, hit);
-		tmp = tmp->next;
-	}
-	return (vec3_mul(get_origin_color(hit.object), diffuse_ratio / 256.0));
+	return (
+		vec3_mul(
+			get_color(hit.object),
+			get_diffuse_ratio(var, light, hit) / 256.0
+		)
+	);
 }
 
 static double	get_diffuse_ratio(t_var *var, t_light *light, t_hit hit)
@@ -44,7 +39,7 @@ static double	get_diffuse_ratio(t_var *var, t_light *light, t_hit hit)
 	dist_to_light = vec3_length(vec3_sub(light->origin, normal_ray.origin));
 	next_hit = hit_object(var, light_ray);
 	if (next_hit.object != NULL && \
-		next_hit.object->shape == PLANE && \
+		get_type(next_hit.object) == LAMBERTIAN && \
 		vec3_length(next_hit.ray.direction) < dist_to_light)
 		return (0);
 	return (ret);

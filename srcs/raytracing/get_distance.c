@@ -7,6 +7,7 @@ double			get_distance_to_cylinder(void *object, t_ray ray);
 static double	dist_to_sphere(double a, double half_b, double c);
 static double	dist_to_cylinder(double a, double half_b, double c);
 
+// TODO: sphere is not spherical, but ellipsoid
 double	get_distance_to_sphere(void *object, t_ray ray)
 {
 	t_sphere *const	sphere = (t_sphere *) object;

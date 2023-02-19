@@ -17,7 +17,7 @@ const double	g_whole_weight = 256.0;
 
 int				render(t_var *var);
 uint			anti_aliasing(t_var *var, double row, double col);
-static t_vec3	get_color(t_var *var, double row, double col, int idx);
+static t_vec3	get_color_of_sample(t_var *var, double row, double col, int i);
 static t_bool	clamp(t_vec3 *ret, uint min, uint max);
 
 int	render(t_var *var)
@@ -46,16 +46,16 @@ uint	anti_aliasing(t_var *var, double row, double col)
 	i = -1;
 	color = (t_vec3){0, 0, 0};
 	while (++i < g_samples)
-		color = vec3_add(color, get_color(var, row, col, i));
+		color = vec3_add(color, get_color_of_sample(var, row, col, i));
 	if (clamp(&color, 0, 255) == FALSE)
 		return (0);
 	return (vec3_to_color(color));
 }
 
-static t_vec3	get_color(t_var *var, double row, double col, int idx)
+static t_vec3	get_color_of_sample(t_var *var, double row, double col, int i)
 {
-	const int		row_offset = (idx / g_row);
-	const int		col_offset = (idx % g_col);
+	const int		row_offset = (i / g_row);
+	const int		col_offset = (i % g_col);
 	const t_ray		ray = primary_ray(
 			var->camera,
 			row + (row_offset - g_row / 2) * g_offset,
