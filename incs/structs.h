@@ -59,11 +59,18 @@ typedef struct	s_light
 	t_vec3	color;
 }	t_light;
 
+typedef enum	e_type
+{
+	LAMBERTIAN = 0,
+	DIELECTRIC = 1,
+}	t_type;
+
 typedef struct	s_sphere
 {
 	t_vec3	center;
 	double	radius;
 	t_vec3	color;
+	t_type	type;
 }	t_sphere;
 
 typedef struct	s_plane
@@ -71,6 +78,7 @@ typedef struct	s_plane
 	t_vec3	point;
 	t_vec3	normal;
 	t_vec3	color;
+	t_type	type;
 }	t_plane;
 
 typedef struct	s_cylinder
@@ -80,6 +88,7 @@ typedef struct	s_cylinder
 	double	radius;
 	double	height;
 	t_vec3	color;
+	t_type	type;
 }	t_cylinder;
 
 typedef enum	e_shape

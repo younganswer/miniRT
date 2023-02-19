@@ -33,7 +33,6 @@ OBJS_DIR	= objs
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${LIBGNL_INCS_DIR} -I${LIBVEC_INCS_DIR} -I${LIBMLX_INCS_DIR} -MD -O3
 LDFLAGS	= -L${LIBFT_DIR} -lft -L${LIBGNL_DIR} -lgnl -L${LIBVEC_DIR} -lvec -L${LIBRAY_DIR} -lray -L${LIBMLX_DIR} -lmlx -framework OpenGL -framework AppKit
-LDFLAGS += -fsanitize=address
 AR		= ar rcs
 RM		= rm -f
 
@@ -41,13 +40,6 @@ SRCS = 	miniRT.c \
 		err/exit_with_err.c \
 		err/set_err.c \
 		event/key_event.c \
-		parse/parse.c \
-		parse/parse_ambient_lightning.c \
-		parse/parse_camera.c \
-		parse/parse_light.c \
-		parse/parse_sphere.c \
-		parse/parse_plane.c \
-		parse/parse_cylinder.c \
 		raytracing/raytracing.c \
 		raytracing/ambient.c \
 		raytracing/diffuse.c \
@@ -56,18 +48,69 @@ SRCS = 	miniRT.c \
 		raytracing/ray.c \
 		raytracing/specular.c \
 		raytracing/vec3_utils_in_raytracing.c \
-		render/render.c
-		
+		render/render.c \
+
+OBJS_DIRS = ${OBJS_DIR}/err \
+			${OBJS_DIR}/event \
+			${OBJS_DIR}/raytracing \
+			${OBJS_DIR}/render
+
+ifdef BONUS
+	SRCS += parse_bonus/parse_bonus.c \
+			parse_bonus/parse_ambient_lightning_bonus.c \
+			parse_bonus/parse_camera_bonus.c \
+			parse_bonus/parse_light_bonus.c \
+			parse_bonus/parse_sphere_bonus.c \
+			parse_bonus/parse_plane_bonus.c \
+			parse_bonus/parse_cylinder_bonus.c \
+			parse_bonus/parse_utils_bonus.c
+	OBJS_DIRS += ${OBJS_DIR}/parse_bonus
+else
+	SRCS += parse/parse.c \
+			parse/parse_ambient_lightning.c \
+			parse/parse_camera.c \
+			parse/parse_light.c \
+			parse/parse_sphere.c \
+			parse/parse_plane.c \
+			parse/parse_cylinder.c \
+			parse/parse_utils.c
+	OBJS_DIRS += ${OBJS_DIR}/parse
+endif
+
+ifdef SANITIZE
+	CFLAGS += -fsanitize=address
+endif
+
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
 DEPS := ${OBJS:.o=.d}
 
+IS_MANDATORY	= ${OBJS_DIR}/is_mandatory
+IS_BONUS		= ${OBJS_DIR}/is_bonus
 
-all: ${NAME}
+
+all: ${IS_MANDATORY}
+
+
+bonus: ${IS_BONUS}
+
+
+${IS_MANDATORY}:
+	@${RM} ${NAME} ${IS_BONUS}
+	@${MAKE} ${NAME}
+	@touch ${IS_MANDATORY}
+
+
+${IS_BONUS}:
+	@${RM} ${NAME} ${IS_MANDATORY}
+	@${MAKE} BONUS=1 ${NAME}
+	@touch ${IS_BONUS}
 
 
 ${NAME}: ${OBJS}
-	@printf "\bdone\n"
+	@if [ ${IDX} -gt 0 ]; then\
+		printf "\b"; echo "done";\
+	fi
 	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS}
 	@echo "Build ${NAME}: done"
 
@@ -75,11 +118,12 @@ ${NAME}: ${OBJS}
 ${OBJS}: ${LIBMLX}
 
 
-${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
+${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIRS}
 	${eval IDX = ${shell expr ${IDX} + 1}}
 	${eval T_IDX = ${shell expr ${IDX} % 32}}
 	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
 	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
+	${eval DONE = 1}
 	@if [ ${IDX} = 1 ]; then\
 		echo -n "Build dependencies in ${NAME} ...  ";\
 	fi
@@ -90,11 +134,10 @@ ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 ${OBJS_DIR}:
 	@echo "Build ${NAME}"
 	@mkdir -p ${OBJS_DIR}
-	@mkdir -p ${OBJS_DIR}/err
-	@mkdir -p ${OBJS_DIR}/event
-	@mkdir -p ${OBJS_DIR}/parse
-	@mkdir -p ${OBJS_DIR}/raytracing
-	@mkdir -p ${OBJS_DIR}/render
+
+
+${OBJS_DIRS}: ${OBJS_DIR}
+	@mkdir -p ${OBJS_DIRS}
 
 
 ${LIBFT}:

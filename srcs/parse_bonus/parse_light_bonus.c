@@ -10,14 +10,13 @@ t_bool	parse_light(t_var *var, char **splited)
 {
 	t_light	*light;
 
-	if (0 < ft_lstsize(var->lights))
-		return (set_err(var, DUPLICATED_IDENTIFIER) && FALSE);
-	if (ft_strslen(splited) != 2)
+	if (ft_strslen(splited) != 3)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	light = ft_calloc(sizeof(t_light), 1, "Failed to allocate memory");
 	ft_lstadd_back(&var->lights, ft_lstnew(light));
 	if (parse_vec3(&light->origin, splited[0]) == FALSE || \
-		parse_ratio(var, &light->ratio, splited[1]) == FALSE)
+		parse_ratio(var, &light->ratio, splited[1]) == FALSE || \
+		parse_vec3(&light->color, splited[2]) == FALSE)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	return (TRUE);
 }
