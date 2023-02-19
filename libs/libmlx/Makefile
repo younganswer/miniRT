@@ -1,32 +1,32 @@
 SHELL	= /bin/bash
 IDX		= 0
 
-NAME	:= libmlx.a
-CC		:= cc
-CFLAGS	:= -I{INCS_DIR} -MD -O3
+NAME	= libmlx.a
+CC		= cc
+CFLAGS	= -I${INCS_DIR} -MD -O3
 # add to match string put with X11 in size and position
 CFLAGS	+= -DSTRINGPUTX11
 CFLAGS	+= -Wno-deprecated-declarations
-AR		:= ar rcs
-RM		:= rm -f
+AR		= ar rcs
+RM		= rm -f
 
-INCS_DIR	:= incs
-SRCS_DIR	:= srcs
-OBJS_DIR	:= objs
+INCS_DIR	= incs
+SRCS_DIR	= srcs
+OBJS_DIR	= objs
 
-SRCS	:=	mlx_shaders.c \
+SRCS	=	mlx_shaders.c \
 			mlx_new_window.m \
 			mlx_init_loop.m \
 			mlx_new_image.m \
 			mlx_xpm.c \
-			mlx_int_str_to_wordtab.c \
+			mlx_int_str_to_wordtab.c
 SRCS	+=	mlx_png.c \
 			mlx_mouse.m
 
 SRCS	:= ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS	:= ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
 OBJS	:= ${OBJS:${SRCS_DIR}/%.m=${OBJS_DIR}/%.o}
-DEPS	:= ${SRCS:${OBJS_DIR}/%.o=${OBJS_DIR}/%.d}
+DEPS	:= ${OBJS:${OBJS_DIR}/%.o=${OBJS_DIR}/%.d}
 
 SRCS_LEN	:= ${shell echo ${SRCS} | wc -w}
 
