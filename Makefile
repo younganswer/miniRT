@@ -192,5 +192,6 @@ re:
 
 .PHONY: all clean fclean re bonus
 
+.NOTPARALLEL: all clean fclean re bonus
 
 -include ${DEPS}
