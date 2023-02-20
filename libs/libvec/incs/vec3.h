@@ -5,7 +5,7 @@
 #  define uint unsigned int
 # endif
 
-typedef struct	s_vec3
+typedef struct s_vec3
 {
 	double	x;
 	double	y;

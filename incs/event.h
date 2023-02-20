@@ -3,13 +3,13 @@
 
 # include "structs.h"
 
-typedef enum	e_keycode
+typedef enum e_keycode
 {
 	KEY_ESC = 53,
 }	t_keycode;
 
 // key_event.c
-int key_pressed(int key, t_var *var);
-int key_released(int key, t_var *var);
+int	key_pressed(int key, t_var *var);
+int	key_released(int key, t_var *var);
 
 #endif

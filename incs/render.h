@@ -4,7 +4,7 @@
 # include "structs.h"
 
 // render.c
-int	render(t_var *var);
+int				render(t_var *var);
 
 // render_sphere.c
 double			get_distance_to_sphere(void *object, t_ray ray);

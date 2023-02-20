@@ -1,5 +1,5 @@
-#ifndef RAY_H
-# define RAY_H
+#ifndef RAYTRACING_H
+# define RAYTRACING_H
 
 # include "structs.h"
 
