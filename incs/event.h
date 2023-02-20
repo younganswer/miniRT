@@ -10,6 +10,5 @@ typedef enum e_keycode
 
 // key_event.c
 int	key_pressed(int key, t_var *var);
-int	key_released(int key, t_var *var);
 
 #endif

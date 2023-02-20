@@ -29,11 +29,6 @@ typedef enum e_err
 typedef enum e_x_event
 {
 	KEY_PRESSED = 2,
-	KEY_RELEASED = 3,
-	MOUSE_PRESSED = 4,
-	MOUSE_RELEASED = 5,
-	MOUSE_MOVED = 6,
-	MOUSE_SCROLLED = 7,
 	KEY_DESTROY = 17,
 }	t_x_event;
 
