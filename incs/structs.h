@@ -9,8 +9,8 @@
 #  define uint unsigned int
 # endif
 
-# define SCREEN_WIDTH 1280
-# define SCREEN_HEIGHT 720
+# define SCREEN_WIDTH 100
+# define SCREEN_HEIGHT 100
 // # define SCREEN_WIDTH 1920
 // # define SCREEN_HEIGHT 1080
 
@@ -99,7 +99,9 @@ typedef struct	s_hit
 {
 	t_object	*object;
 	t_ray		ray;
-	t_ray		normal;
+	t_vec3		normal;
+	double		d;
+	double		color;
 }	t_hit;
 
 typedef struct	s_mlx
