@@ -3,7 +3,6 @@
 t_vec3	raytracing(t_var *var, t_hit hit);
 t_vec3	get_color(t_object *object);
 t_type	get_type(t_object *object);
-t_vec3	handle_shadow_acne(t_vec3 origin, t_vec3 direction);
 
 t_vec3	raytracing(t_var *var, t_hit hit)
 {
@@ -53,17 +52,4 @@ t_type	get_type(t_object *object)
 	else if (object->shape == CYLINDER)
 		ret = ((t_cylinder *)object->object)->type;
 	return (ret);
-}
-
-t_vec3	handle_shadow_acne(t_vec3 origin, t_vec3 direction)
-{
-	return (
-		vec3_add(
-			origin,
-			vec3_mul(
-				direction,
-				0.0001
-			)
-		)
-	);
 }

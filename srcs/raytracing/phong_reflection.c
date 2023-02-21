@@ -8,8 +8,6 @@ t_vec3	phong_reflection(t_var *var, t_light *light, t_hit hit)
 	t_vec3	spec;
 	t_vec3	amb;
 
-	if (hit.object == NULL)
-		return ((t_vec3){0, 0, 0});
 	diff = diffuse(var, light, hit);
 	spec = specular(light, hit);
 	amb = ambient(var, hit);
