@@ -11,7 +11,6 @@ static t_bool	check_filename(t_var *var, char *file);
 static t_bool	init_mlx(t_var *var);
 static t_bool	init_img(t_var *var);
 
-// TODO: cylinder
 int	main(int argc, char **argv)
 {
 	t_var	*var;
