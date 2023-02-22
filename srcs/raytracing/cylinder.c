@@ -64,6 +64,7 @@ static double	get_distance_to_base(t_ray normal, t_ray ray, double radius)
 				normal.origin
 				)
 			);
+	
 	if (radius < dist_to_center)
 		return (INF);
 	return (ret);
