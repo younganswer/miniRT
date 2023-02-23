@@ -40,10 +40,9 @@ t_ray	get_normal_of_cylinder(void *object, t_vec3 contact)
 	t_ray				ret;
 
 	ret.origin = contact;
-	if (vec3_dot(contact, cylinder->normal) == 0)
+	if (fabs(vec3_dot(vec3_sub(cylinder->center, contact), cylinder->normal)) <= INFSIMAL)
 		ret.direction = vec3_reverse(cylinder->normal);
-	contact = vec3_add(contact, vec3_mul(cylinder->normal, cylinder->height));
-	if (vec3_dot(contact, cylinder->normal) == 0)
+	if (fabs(vec3_dot(vec3_sub(vec3_add(cylinder->center, vec3_mul(cylinder->normal, cylinder->height)), contact), cylinder->normal)) <= INFSIMAL)
 		ret.direction = cylinder->normal;
 	else
 		ret.direction = vec3_unit(normal);
@@ -60,7 +59,7 @@ static double	get_distance_to_base(t_ray normal, t_ray ray, double radius)
 
 	oc = vec3_sub(normal.origin, ray.origin);
 	denom = vec3_dot(normal.direction, ray.direction);
-	numer = vec3_dot(vec3_sub(oc, ray.origin), normal.direction);
+	numer = vec3_dot(oc, normal.direction);
 	if (fabs(denom) <= INFSIMAL)
 		return (INF);
 	ret = numer / denom;

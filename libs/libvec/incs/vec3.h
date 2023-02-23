@@ -1,6 +1,8 @@
 #ifndef VEC3_H
 # define VEC3_H
 
+# include "../../libft/incs/libft.h"
+
 # ifndef uint
 #  define uint unsigned int
 # endif
