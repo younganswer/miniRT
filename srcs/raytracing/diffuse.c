@@ -2,7 +2,7 @@
 #include <math.h>
 
 t_vec3			diffuse(t_var *var, t_light *light, t_hit hit);
-static double	get_diffuse_ratio(t_var *var, t_ray normal_ray, t_ray light_ray);
+static double	get_diffuse(t_var *var, t_ray normal_ray, t_ray light_ray);
 
 t_vec3	diffuse(t_var *var, t_light *light, t_hit hit)
 {
@@ -10,12 +10,12 @@ t_vec3	diffuse(t_var *var, t_light *light, t_hit hit)
 		hit.normal.origin,
 		vec3_sub(light->origin, hit.normal.origin)
 	};
-	const double	ratio = get_diffuse_ratio(var, hit.normal, light_ray);
+	const double	ratio = get_diffuse(var, hit.normal, light_ray);
 
 	return (vec3_mul(hit.color, ratio * light->ratio / 256.0));
 }
 
-static double	get_diffuse_ratio(t_var *var, t_ray normal_ray, t_ray light_ray)
+static double	get_diffuse(t_var *var, t_ray normal_ray, t_ray light_ray)
 {
 	double		ret;
 	t_hit		next_hit;

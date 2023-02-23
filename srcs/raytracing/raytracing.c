@@ -20,7 +20,9 @@ t_vec3	raytracing(t_var *var, t_hit hit)
 		if (type == LAMBERTIAN)
 			ret = vec3_add(ret, phong_reflection(var, light->content, hit));
 		else if (type == DIELECTRIC)
-			ret = vec3_add(ret, vec3_mul(mirror_reflection(var, light->content, hit, 5), 2.0));
+			ret = vec3_add(ret, vec3_mul(
+					mirror_reflection(var, light->content, hit, 5), 2.0
+					));
 		light = light->next;
 	}
 	return (vec3_mul(ret, 256));
