@@ -42,7 +42,7 @@ t_ray	get_normal_of_cylinder(void *object, t_vec3 contact)
 	ret.origin = contact;
 	if (fabs(vec3_dot(vec3_sub(cylinder->center, contact), cylinder->normal)) <= INFSIMAL)
 		ret.direction = vec3_reverse(cylinder->normal);
-	if (fabs(vec3_dot(vec3_sub(vec3_add(cylinder->center, vec3_mul(cylinder->normal, cylinder->height)), contact), cylinder->normal)) <= INFSIMAL)
+	else if (fabs(vec3_dot(vec3_sub(vec3_add(cylinder->center, vec3_mul(cylinder->normal, cylinder->height)), contact), cylinder->normal)) <= INFSIMAL)
 		ret.direction = cylinder->normal;
 	else
 		ret.direction = vec3_unit(normal);
