@@ -56,6 +56,7 @@ static t_bool	set_hit(t_hit *hit, t_object *object, double dist, t_ray ray)
 				vec3_mul(hit->normal.direction, 0.001)
 				);
 		hit->color = get_color(hit->object);
+		hit->type = get_type(hit->object);
 	}
 	return (TRUE);
 }

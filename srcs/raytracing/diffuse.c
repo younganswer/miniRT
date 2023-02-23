@@ -31,7 +31,7 @@ static double	get_diffuse(t_var *var, t_ray normal_ray, t_ray light_ray)
 	light_ray.direction = vec3_unit(light_ray.direction);
 	next_hit = hit_object(var, light_ray);
 	if (next_hit.object != NULL && \
-		get_type(next_hit.object) == LAMBERTIAN && \
+		next_hit.type == LAMBERTIAN && \
 		vec3_length(next_hit.ray.direction) < dist_to_light)
 		return (0);
 	return (ret);

@@ -6,7 +6,7 @@ double			get_distance_to_cylinder(void *object, t_ray ray);
 t_ray			get_normal_of_cylinder(void *object, t_vec3 contact);
 static double	get_distance_to_base(t_ray normal, t_ray ray, double radius);
 static double	get_distance_to_curved(t_cylinder *cylinder, t_ray ray);
-static double	height_of_contact(t_vec3 normal, t_ray ray, double t);
+static t_bool	is_out_of_height(t_cylinder *cylinder, t_ray ray, double t);
 
 double	get_distance_to_cylinder(void *object, t_ray ray)
 {
@@ -99,14 +99,18 @@ static double	get_distance_to_curved(t_cylinder *cylinder, t_ray ray)
 	ret = (-half_b - sqrt(ret)) / a;
 	if (ret < 0)
 		return (INF);
-	if (cylinder->height < height_of_contact(cylinder->normal, ray, ret))
+	if (is_out_of_height(cylinder, ray, ret))
 		return (INF);
 	return (ret);
 }
 
-static double	height_of_contact(t_vec3 normal, t_ray ray, double t)
+static t_bool	is_out_of_height(t_cylinder *cylinder, t_ray ray, double t)
 {
 	const t_vec3	contact = vec3_add(ray.origin, vec3_mul(ray.direction, t));
+	const t_vec3	oc = vec3_sub(contact, cylinder->center);
+	const double	oc_dot_normal = vec3_dot(oc, cylinder->normal);
 
-	return (vec3_dot(vec3_add(contact, normal), normal));
+	if (oc_dot_normal < 0 || cylinder->height < oc_dot_normal)
+		return (TRUE);
+	return (FALSE);
 }

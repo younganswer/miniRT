@@ -12,16 +12,18 @@ static t_ray	get_reflect(t_hit hit);
 t_vec3	mirror_reflection(t_var *var, t_light *light, t_hit hit, int depth)
 {
 	const t_hit	next_hit = hit_object(var, get_reflect(hit));
+	t_vec3		next_color;
 	t_vec3		ret;
 
-	ret = (t_vec3){0, 0, 0};
+	ret = vec3_mul(vec3_div(hit.color, 256), 0.05);
 	if (next_hit.object == NULL || depth == 0)
 		return (ret);
-	if (get_type(next_hit.object) == DIELECTRIC)
-		ret = mirror_reflection(var, light, next_hit, depth - 1);
+	if (next_hit.type == DIELECTRIC)
+		next_color = mirror_reflection(var, light, next_hit, depth - 1);
 	else
-		ret = phong_reflection(var, light, next_hit);
-	return (vec3_matrix(vec3_div(get_color(hit.object), 256), ret));
+		next_color = phong_reflection(var, light, next_hit);
+	ret = vec3_add(ret, vec3_mul(next_color, 0.95));
+	return (vec3_matrix(vec3_div(hit.color, 256), ret));
 }
 
 static t_ray	get_reflect(t_hit hit)

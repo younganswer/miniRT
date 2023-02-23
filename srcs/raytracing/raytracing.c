@@ -7,22 +7,20 @@ t_type	get_type(t_object *object);
 t_vec3	raytracing(t_var *var, t_hit hit)
 {
 	t_list	*light;
-	t_type	type;
 	t_vec3	ret;
 
 	ret = (t_vec3){0, 0, 0};
 	if (hit.object == NULL)
 		return (ret);
 	light = var->lights;
-	type = get_type(hit.object);
 	while (light)
 	{
-		if (type == LAMBERTIAN)
+		if (hit.type == LAMBERTIAN)
 			ret = vec3_add(ret, phong_reflection(var, light->content, hit));
-		else if (type == DIELECTRIC)
+		else if (hit.type == DIELECTRIC)
 			ret = vec3_add(ret, vec3_mul(
-					mirror_reflection(var, light->content, hit, 5), 2.0
-					));
+						mirror_reflection(var, light->content, hit, 5), 2.0
+						));
 		light = light->next;
 	}
 	return (vec3_mul(ret, 256));
