@@ -17,7 +17,7 @@ t_vec3	specular(t_light *light, t_hit hit)
 			vec3_unit(reflect),
 			vec3_unit(vec3_reverse(hit.ray.direction))
 			);
-	const double	ratio = pow(fmax(0, dot), 10) * light->ratio / 256;
+	const double	ratio = pow(fmax(0, dot), 10) * light->ratio;
 
-	return (vec3_mul(hit.color, ratio));
+	return (vec3_mul(vec3_div(hit.color, 256), ratio));
 }
