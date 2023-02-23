@@ -3,6 +3,7 @@
 #include <math.h>
 
 t_bool			parse_camera(t_var *var, char **splited);
+static t_bool	check_dir_range(t_var *var, t_vec3 dir);
 static t_bool	parse_fov(t_var *var, double *fov, char *s_fov);
 static t_bool	set_viewport(t_camera *camera);
 static t_bool	rotate_tranform(t_camera *camera);
@@ -17,9 +18,17 @@ t_bool	parse_camera(t_var *var, char **splited)
 	return (
 		parse_vec3(&var->camera->ray.origin, splited[0]) && \
 		parse_vec3(&var->camera->ray.direction, splited[1]) && \
+		check_dir_range(var, var->camera->ray.direction) && \
 		parse_fov(var, &var->camera->fov, splited[2]) && \
 		set_viewport(var->camera)
 	);
+}
+
+static t_bool	check_dir_range(t_var *var, t_vec3 dir)
+{
+	if (fabs(dir.x) <= 1 && fabs(dir.y) <= 1 && fabs(dir.z) <= 1)
+		return (TRUE);
+	return (set_err(var, INVALID_RANGE) && FALSE);
 }
 
 static t_bool	parse_fov(t_var *var, double *fov, char *s_fov)

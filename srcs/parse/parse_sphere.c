@@ -15,7 +15,8 @@ t_bool	parse_sphere(t_var *var, char **splited)
 	sphere = ft_calloc(sizeof(t_sphere), 1, "Error: Fail to init sphere");
 	if (parse_vec3(&sphere->center, splited[0]) == FALSE || \
 		parse_radius(var, &sphere->radius, splited[1]) == FALSE || \
-		parse_vec3(&sphere->color, splited[2]) == FALSE)
+		parse_vec3(&sphere->color, splited[2]) == FALSE || \
+		color_range_is_valid(var, sphere->color) == FALSE)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	object->object = sphere;
 	object->shape = SPHERE;

@@ -15,9 +15,11 @@ t_bool	parse_cylinder(t_var *var, char **splited)
 	cylinder = ft_calloc(sizeof(t_cylinder), 1, "Error: Fail to init cylinder");
 	if (parse_vec3(&cylinder->center, splited[0]) == FALSE || \
 		parse_vec3(&cylinder->normal, splited[1]) == FALSE || \
+		dir_range_is_valid(var, cylinder->normal) == FALSE || \
 		parse_radius_height(var, &cylinder->radius, splited[2]) == FALSE || \
 		parse_radius_height(var, &cylinder->height, splited[3]) == FALSE || \
-		parse_vec3(&cylinder->color, splited[4]) == FALSE)
+		parse_vec3(&cylinder->color, splited[4]) == FALSE || \
+		color_range_is_valid(var, cylinder->color) == FALSE)
 		return (FALSE);
 	cylinder->normal = vec3_unit(cylinder->normal);
 	object->object = cylinder;

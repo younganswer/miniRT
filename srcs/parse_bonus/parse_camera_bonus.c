@@ -17,6 +17,7 @@ t_bool	parse_camera(t_var *var, char **splited)
 	return (
 		parse_vec3(&var->camera->ray.origin, splited[0]) && \
 		parse_vec3(&var->camera->ray.direction, splited[1]) && \
+		dir_range_is_valid(var, var->camera->ray.direction) && \
 		parse_fov(var, &var->camera->fov, splited[2]) && \
 		set_viewport(var->camera)
 	);

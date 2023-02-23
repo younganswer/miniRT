@@ -8,7 +8,7 @@ t_bool	parse_ambient_lightning(t_var *var, char **splited)
 {
 	if (var->alight != NULL)
 		return (set_err(var, DUPLICATED_IDENTIFIER) && FALSE);
-	if (ft_strslen(splited) != 1)
+	if (ft_strslen(splited) != 1 && ft_strslen(splited) != 2)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	var->alight = ft_calloc(sizeof(t_alight), 1, "Error: Fail to init alight");
 	return (parse_ratio(var, &var->alight->ratio, splited[0]));

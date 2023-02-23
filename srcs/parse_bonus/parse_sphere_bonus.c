@@ -16,7 +16,8 @@ t_bool	parse_sphere(t_var *var, char **splited)
 	if (parse_vec3(&sphere->center, splited[0]) == FALSE || \
 		parse_radius(var, &sphere->radius, splited[1]) == FALSE || \
 		parse_vec3(&sphere->color, splited[2]) == FALSE || \
-		parse_type(&sphere->type, splited[3]) == FALSE)
+		color_range_is_valid(var, sphere->color) == FALSE || \
+		parse_type(var, &sphere->type, splited[3]) == FALSE)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	object->object = sphere;
 	object->shape = SPHERE;

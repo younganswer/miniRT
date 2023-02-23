@@ -15,7 +15,9 @@ t_bool	parse_plane(t_var *var, char **splited)
 	plane = ft_calloc(sizeof(t_plane), 1, "Error: Fail to init plane");
 	if (parse_vec3(&plane->point, splited[0]) == FALSE || \
 		parse_vec3(&plane->normal, splited[1]) == FALSE || \
-		parse_vec3(&plane->color, splited[2]) == FALSE)
+		dir_range_is_valid(var, plane->normal) == FALSE || \
+		parse_vec3(&plane->color, splited[2]) == FALSE || \
+		color_range_is_valid(var, plane->color) == FALSE)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	plane->normal = vec3_unit(plane->normal);
 	if (normal_to_camera(var, &plane->point, &plane->normal) == FALSE)

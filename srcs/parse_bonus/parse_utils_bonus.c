@@ -10,7 +10,7 @@ const static char		*g_type[] = {
 
 char	*get_next_line_not_empty(int fd);
 t_bool	parse_vec3(t_vec3 *vec, char *line);
-t_bool	parse_type(t_type *type, char *line);
+t_bool	parse_type(t_var *var, t_type *type, char *line);
 
 char	*get_next_line_not_empty(int fd)
 {
@@ -46,10 +46,10 @@ t_bool	parse_vec3(t_vec3 *vec, char *line)
 	vec->x = ft_atof(split[0]);
 	vec->y = ft_atof(split[1]);
 	vec->z = ft_atof(split[2]);
-	return (ft_strsfree((char ***) &split) == TRUE);
+	return (ft_strsfree((char ***) &split));
 }
 
-t_bool	parse_type(t_type *type, char *line)
+t_bool	parse_type(t_var *var, t_type *type, char *line)
 {
 	int	i;
 
@@ -68,5 +68,5 @@ t_bool	parse_type(t_type *type, char *line)
 		}
 		i++;
 	}
-	return (FALSE);
+	return (set_err(var, INVALID_IDENTIFIER) && FALSE);
 }

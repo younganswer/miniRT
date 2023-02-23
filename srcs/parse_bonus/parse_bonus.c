@@ -1,6 +1,7 @@
 #include "../../libs/libft/incs/libft.h"
 #include "../../incs/parse.h"
 #include "../../incs/err.h"
+#include <math.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -27,6 +28,8 @@ static t_bool (*const	g_parse_func[])(t_var *, char **) = {
 };
 
 t_bool			parse(t_var *var, char *file);
+t_bool			color_range_is_valid(t_var *var, t_vec3 color);
+t_bool			dir_range_is_valid(t_var *var, t_vec3 dir);
 static t_bool	parse_each_var(t_var *var, char **split);
 static t_bool	all_var_set_successfully(t_var *var);
 
@@ -54,6 +57,22 @@ t_bool	parse(t_var *var, char *file)
 		ft_strsfree(&split);
 	}
 	return (all_var_set_successfully(var));
+}
+
+t_bool	color_range_is_valid(t_var *var, t_vec3 color)
+{
+	if ((0 <= color.x) && (color.x < 256) && \
+		(0 <= color.y) && (color.y < 256) && \
+		(0 <= color.z) && (color.z < 256))
+		return (TRUE);
+	return (set_err(var, INVALID_RANGE) && FALSE);
+}
+
+t_bool	dir_range_is_valid(t_var *var, t_vec3 dir)
+{
+	if (fabs(dir.x) <= 1 && fabs(dir.y) <= 1 && fabs(dir.z) <= 1)
+		return (TRUE);
+	return (set_err(var, INVALID_RANGE) && FALSE);
 }
 
 static t_bool	parse_each_var(t_var *var, char **split)
@@ -86,7 +105,7 @@ static t_bool	all_var_set_successfully(t_var *var)
 		objects[((t_object *)tmp->content)->shape]++;
 		tmp = tmp->next;
 	}
-	// if (objects[0] == 0 || objects[1] == 0 || objects[2] == 0)
-		// return (set_err(var, INVALID_ARG) && FALSE);
+	if (objects[0] == 0 || objects[1] == 0 || objects[2] == 0)
+		return (set_err(var, INVALID_ARG) && FALSE);
 	return (TRUE);
 }
