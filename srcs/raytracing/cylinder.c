@@ -1,6 +1,5 @@
 #include "../../incs/raytracing.h"
 #include <math.h>
-#include <stdio.h>
 
 double			get_distance_to_cylinder(void *object, t_ray ray);
 t_ray			get_normal_of_cylinder(void *object, t_vec3 contact);

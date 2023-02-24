@@ -4,7 +4,6 @@
 #include <math.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 const static char		*g_delim = " \t\v\f\r";

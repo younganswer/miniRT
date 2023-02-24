@@ -1,7 +1,5 @@
 #include "../../incs/parse.h"
 #include "../../incs/err.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 t_bool			parse_light(t_var *var, char **splited);
 static t_bool	parse_ratio(t_var *var, double *ratio, char *s_ratio);

@@ -4,7 +4,6 @@
 #include <math.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 const static char		*g_delim = " \t\v\f\r";
@@ -31,7 +30,7 @@ t_bool			parse(t_var *var, char *file);
 t_bool			color_range_is_valid(t_var *var, t_vec3 color);
 t_bool			dir_range_is_valid(t_var *var, t_vec3 dir);
 static t_bool	parse_each_var(t_var *var, char **split);
-static t_bool	all_var_set_successfully(t_var *var);
+static t_bool	variables_in_capital_letter_set_completely(t_var *var);
 
 t_bool	parse(t_var *var, char *file)
 {
@@ -56,7 +55,7 @@ t_bool	parse(t_var *var, char *file)
 			return (ft_strsfree(&split) && FALSE);
 		ft_strsfree(&split);
 	}
-	return (all_var_set_successfully(var));
+	return (variables_in_capital_letter_set_completely(var));
 }
 
 t_bool	color_range_is_valid(t_var *var, t_vec3 color)
@@ -89,7 +88,7 @@ static t_bool	parse_each_var(t_var *var, char **split)
 	return (set_err(var, INVALID_IDENTIFIER) && FALSE);
 }
 
-static t_bool	all_var_set_successfully(t_var *var)
+static t_bool	variables_in_capital_letter_set_completely(t_var *var)
 {
 	if (var->alight == NULL || var->camera == NULL || var->lights == NULL)
 		return (set_err(var, INVALID_ARG) && FALSE);
