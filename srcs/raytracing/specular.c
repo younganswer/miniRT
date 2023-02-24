@@ -19,7 +19,7 @@ t_vec3	specular(t_light *light, t_hit hit)
 			hit.color,
 			specular_ratio / 256.0
 			);
-	
+
 	return (vec3_matrix(obj_color, light_color));
 }
 
@@ -33,6 +33,6 @@ static double	get_specular_ratio(t_ray light_ray, t_hit hit)
 			vec3_unit(reflect),
 			vec3_unit(vec3_reverse(hit.ray.direction))
 			);
-	
+
 	return (pow(fmax(0, dot), 10));
 }

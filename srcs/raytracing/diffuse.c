@@ -2,7 +2,11 @@
 #include <math.h>
 
 t_vec3			diffuse(t_var *var, t_light *light, t_hit hit);
-static double	get_diffuse_ratio(t_var *var, t_ray normal_ray, t_ray light_ray);
+static double	get_diffuse_ratio(
+					t_var *var,
+					t_ray normal_ray,
+					t_ray light_ray
+					);
 
 t_vec3	diffuse(t_var *var, t_light *light, t_hit hit)
 {

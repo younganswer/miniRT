@@ -3,8 +3,8 @@
 
 # include "../../libft/incs/libft.h"
 
-# ifndef uint
-#  define uint unsigned int
+# ifndef UINT
+#  define UINT unsigned int
 # endif
 
 typedef struct s_vec3

@@ -4,6 +4,7 @@
 t_bool			parse_cylinder(t_var *var, char **splited);
 static t_bool	parse_height(t_var *var, double *target, char *value);
 static t_bool	parse_radius(t_var *var, double *radius, char *s_radius);
+
 t_bool	parse_cylinder(t_var *var, char **splited)
 {
 	t_object	*object;
