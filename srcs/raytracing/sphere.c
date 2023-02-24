@@ -1,15 +1,19 @@
 #include "../../incs/raytracing.h"
 #include <math.h>
 
-double			get_distance_to_sphere(void *object, t_ray ray);
-t_ray			get_normal_of_sphere(void *object, t_vec3 contact);
-static double	get_dist(t_sphere *sphere, t_ray ray);
+double	get_distance_to_sphere(void *object, t_ray ray);
+t_ray	get_normal_of_sphere(void *object, t_vec3 contact);
+double	discriminate(double a, double half_b, double c);
 
 double	get_distance_to_sphere(void *object, t_ray ray)
 {
 	t_sphere *const	sphere = (t_sphere *) object;
+	const t_vec3	oc = vec3_sub(ray.origin, sphere->center);
+	const double	a = vec3_dot(ray.direction, ray.direction);
+	const double	half_b = vec3_dot(oc, ray.direction);
+	const double	c = vec3_dot(oc, oc) - sphere->radius * sphere->radius;
 
-	return (get_dist(sphere, ray));
+	return (discriminate(a, half_b, c));
 }
 
 t_ray	get_normal_of_sphere(void *object, t_vec3 contact)
@@ -20,19 +24,21 @@ t_ray	get_normal_of_sphere(void *object, t_vec3 contact)
 	return ((t_ray){contact, normal});
 }
 
-static double	get_dist(t_sphere *sphere, t_ray ray)
+double	discriminate(double a, double half_b, double c)
 {
-	const t_vec3	oc = vec3_sub(ray.origin, sphere->center);
-	const double	a = vec3_dot(ray.direction, ray.direction);
-	const double	half_b = vec3_dot(oc, ray.direction);
-	const double	c = vec3_dot(oc, oc) - sphere->radius * sphere->radius;
-	double			ret;
+	const double	dicriminant = pow(half_b, 2) - a * c;
+	double			t1;
+	double			t2;
 
-	ret = pow(half_b, 2) - a * c;
-	if (ret < 0)
+	if (dicriminant < 0)
 		return (INF);
-	ret = (-half_b - sqrt(ret)) / a;
-	if (ret < 0)
+	t1 = (-half_b - sqrt(dicriminant)) / a;
+	t2 = (-half_b + sqrt(dicriminant)) / a;
+	if (t1 < 0 && t2 < 0)
 		return (INF);
-	return (ret);
+	if (t1 < 0)
+		return (t2);
+	if (t2 < 0)
+		return (t1);
+	return (fmin(t1, t2));
 }
