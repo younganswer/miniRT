@@ -15,6 +15,7 @@ const static char		*g_identifier[] = {
 	"sp",
 	"pl",
 	"cy",
+	"co"
 };
 
 static t_bool (*const	g_parse_func[])(t_var *, char **) = {
@@ -24,6 +25,7 @@ static t_bool (*const	g_parse_func[])(t_var *, char **) = {
 	parse_sphere,
 	parse_plane,
 	parse_cylinder,
+	parse_cone
 };
 
 t_bool			parse(t_var *var, char *file);
@@ -79,7 +81,7 @@ static t_bool	parse_each_var(t_var *var, char **split)
 	int	i;
 
 	i = 0;
-	while (i < 6)
+	while (i < 7)
 	{
 		if (ft_strcmp(split[0], g_identifier[i]) == 0)
 			return (g_parse_func[i](var, split + 1));

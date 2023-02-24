@@ -86,11 +86,22 @@ typedef struct s_cylinder
 	t_type	type;
 }	t_cylinder;
 
+typedef struct s_cone
+{
+	t_vec3		center;
+	t_vec3		normal;
+	double		radius;
+	double		height;
+	t_vec3		color;
+	t_type		type;
+}	t_cone;
+
 typedef enum e_shape
 {
 	SPHERE = 0,
 	PLANE = 1,
 	CYLINDER = 2,
+	CONE = 3,
 }	t_shape;
 
 typedef struct s_object

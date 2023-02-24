@@ -1,15 +1,17 @@
 #include "../../incs/raytracing.h"
 
-static double (*const	g_get_distance[3])(void *object, t_ray ray) = {
+static double (*const	g_get_distance[4])(void *object, t_ray ray) = {
 	get_distance_to_sphere,
 	get_distance_to_plane,
 	get_distance_to_cylinder,
+	get_distance_to_cone
 };
 
-static t_ray (*const	g_get_normal[3])(void *object, t_vec3 contact) = {
+static t_ray (*const	g_get_normal[4])(void *object, t_vec3 contact) = {
 	get_normal_of_sphere,
 	get_normal_of_plane,
 	get_normal_of_cylinder,
+	get_normal_of_cone
 };
 
 t_hit			hit_object(t_var *var, t_ray ray);

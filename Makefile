@@ -41,6 +41,7 @@ SRCS = 	miniRT.c \
 		event/key_event.c \
 		raytracing/raytracing.c \
 		raytracing/ambient.c \
+		raytracing/cone.c \
 		raytracing/cylinder.c \
 		raytracing/diffuse.c \
 		raytracing/hit_object.c \
@@ -62,20 +63,21 @@ ifdef BONUS
 	SRCS += parse_bonus/parse_bonus.c \
 			parse_bonus/parse_ambient_lightning_bonus.c \
 			parse_bonus/parse_camera_bonus.c \
-			parse_bonus/parse_light_bonus.c \
-			parse_bonus/parse_sphere_bonus.c \
-			parse_bonus/parse_plane_bonus.c \
+			parse_bonus/parse_cone_bonus.c \
 			parse_bonus/parse_cylinder_bonus.c \
+			parse_bonus/parse_light_bonus.c \
+			parse_bonus/parse_plane_bonus.c \
+			parse_bonus/parse_sphere_bonus.c \
 			parse_bonus/parse_utils_bonus.c
 	OBJS_DIRS += ${OBJS_DIR}/parse_bonus
 else
 	SRCS += parse/parse.c \
 			parse/parse_ambient_lightning.c \
 			parse/parse_camera.c \
-			parse/parse_light.c \
-			parse/parse_sphere.c \
-			parse/parse_plane.c \
 			parse/parse_cylinder.c \
+			parse/parse_light.c \
+			parse/parse_plane.c \
+			parse/parse_sphere.c \
 			parse/parse_utils.c
 	OBJS_DIRS += ${OBJS_DIR}/parse
 endif

@@ -16,6 +16,10 @@ t_type	get_type(t_object *object);
 // ambient.c
 t_vec3	ambient(t_var *var, t_hit hit);
 
+// cone.c
+double	get_distance_to_cone(void *object, t_ray ray);
+t_ray	get_normal_of_cone(void *object, t_vec3 contact);
+
 // cylinder.c
 double	get_distance_to_cylinder(void *object, t_ray ray);
 t_ray	get_normal_of_cylinder(void *object, t_vec3 contact);
