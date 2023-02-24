@@ -1,13 +1,12 @@
 SHELL	= /bin/bash
-SPINNER	= /-\|/
 IDX		= 0
 
-NAME = libgnl.a
+NAME	= libgnl.a
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -O3
-AR = ar rcs
-RM = rm -f
+CC		= cc
+CFLAGS	= -Wall -Wextra -Werror -I{INCS_DIR} -MD -O3
+AR		= ar rcs
+RM		= rm -f
 
 INCS_DIR = incs
 SRCS_DIR = srcs
@@ -18,13 +17,18 @@ SRCS =  get_next_line.c \
 
 SRCS := ${SRCS:%.c=${SRCS_DIR}/%.c}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
+DEPS := ${OBJS:.o=.d}
+
+SRCS_LEN	= ${shell echo ${SRCS} | wc -w}
 
 
 all: ${NAME}
 
 
 ${NAME}: ${OBJS}
-	@printf "\bdone\n"
+	@if [ ${IDX} -gt 0 ]; then\
+		printf "\b"; echo "done ";\
+	fi
 	@${AR} $@ $^
 	@echo "Build ${NAME}: done"
 
@@ -39,12 +43,11 @@ ${OBJS_DIR}:
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c
 	${eval IDX = ${shell expr ${IDX} + 1}}
-	${eval T_IDX = ${shell expr ${IDX} % 32}}
-	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
-	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
-	@if [ ${IDX} = 1 ]; then echo -n "Build dependencies in ${NAME} ...  "; fi
-	@printf "\b${CHR}"
-	@${CC} ${CFLAGS} -c $< -o $@ -I ${INCS_DIR}
+	@if [ ${IDX} = 1 ]; then\
+		echo -n "Build dependencies in ${NAME} ...  ";\
+	fi
+	@printf "%3d%%\b\b\b\b" ${shell expr ${IDX} \* 100 / ${SRCS_LEN}}
+	@${CC} ${CFLAGS} -c $< -o $@
 
 
 
@@ -65,3 +68,7 @@ re:
 
 
 .PHONY: bonus all clean fclean re
+
+.NONPARALLEL: all clean fclean re
+
+-include ${DEPS}

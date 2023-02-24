@@ -3,7 +3,7 @@
 
 # include "../../libvec/incs/vec3.h"
 
-typedef struct	s_ray
+typedef struct s_ray
 {
 	t_vec3	origin;
 	t_vec3	direction;

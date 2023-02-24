@@ -1,48 +1,13 @@
 #include "../../incs/raytracing.h"
 #include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-t_vec3			specular(t_var *var, t_hit hit, int depth);
-static double	get_specular_ratio(t_light *light, t_hit hit);
+t_vec3	specular(t_light *light, t_hit hit);
 
-t_vec3	specular(t_var *var, t_hit hit, int depth)
+t_vec3	specular(t_light *light, t_hit hit)
 {
-	t_vec3	ret;
-	t_list	*tmp;
-	t_light	*light;
-	t_ray	reflect;
-
-	if (hit.object == NULL || depth == 0)
-		return ((t_vec3){0, 0, 0});
-	ret = get_origin_color(hit.object);
-	tmp = var->lights;
-	while (tmp)
-	{
-		light = tmp->content;
-		if (hit.object->shape == PLANE)
-			ret = vec3_add(ret, vec3_mul(ret, get_specular_ratio(light, hit)));
-		else if (hit.object->shape == SPHERE)
-		{
-			reflect = (t_ray) {
-				vec3_add(hit.ray.origin, hit.ray.direction),
-				vec3_unit(vec3_reflect(
-					vec3_reverse(hit.ray.direction), hit.normal.direction))
-			};
-			reflect = handle_shadow_acne(reflect);
-			ret = vec3_matrix(ret, specular(var, hit_object(var, reflect), depth - 1));
-		}
-		tmp = tmp->next;
-	}
-	return (ret);
-}
-
-static double	get_specular_ratio(t_light *light, t_hit hit)
-{
-	const t_vec3	contact = vec3_add(hit.ray.origin, hit.ray.direction);
 	const t_ray		light_ray = (t_ray){
-		contact,
-		vec3_sub(light->origin, contact)
+		hit.normal.origin,
+		vec3_sub(light->origin, hit.normal.origin)
 	};
 	const t_vec3	reflect = vec3_reflect(
 			light_ray.direction,
@@ -50,8 +15,9 @@ static double	get_specular_ratio(t_light *light, t_hit hit)
 			);
 	const double	dot = vec3_dot(
 			vec3_unit(reflect),
-			vec3_reverse(vec3_unit(hit.ray.direction))
+			vec3_unit(vec3_reverse(hit.ray.direction))
 			);
+	const double	ratio = pow(fmax(0, dot), 10) * light->ratio;
 
-	return (pow(fmax(0, dot), 10) * light->ratio);
+	return (vec3_mul(vec3_div(hit.color, 256), ratio));
 }

@@ -6,8 +6,8 @@
 
 // parse.c
 t_bool	parse(t_var *var, char *file);
-char	*get_next_line_not_empty(int fd);
-t_bool	parse_vec3(t_vec3 *vec, char *line);
+t_bool	color_range_is_valid(t_var *var, t_vec3 color);
+t_bool	dir_range_is_valid(t_var *var, t_vec3 dir);
 
 // parse_ambient_lightning.c
 t_bool	parse_ambient_lightning(t_var *var, char **splited);
@@ -26,5 +26,10 @@ t_bool	parse_plane(t_var *var, char **splited);
 
 // parse_cylinder.c
 t_bool	parse_cylinder(t_var *var, char **splited);
+
+// parse_utils.c
+char	*get_next_line_not_empty(int fd);
+t_bool	parse_vec3(t_vec3 *vec, char *line);
+t_bool	parse_type(t_var *var, t_type *type, char *line);
 
 #endif

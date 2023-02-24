@@ -1,11 +1,13 @@
 #ifndef VEC3_H
 # define VEC3_H
 
+# include "../../libft/incs/libft.h"
+
 # ifndef uint
 #  define uint unsigned int
 # endif
 
-typedef struct	s_vec3
+typedef struct s_vec3
 {
 	double	x;
 	double	y;

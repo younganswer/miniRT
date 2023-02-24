@@ -2,16 +2,15 @@
 #include "../libs/libmlx/incs/mlx.h"
 #include "../incs/structs.h"
 #include "../incs/parse.h"
+#include "../incs/render.h"
 #include "../incs/err.h"
 #include "../incs/event.h"
-#include "../incs/render.h"
 
 static t_bool	init_var(t_var *var, char *file);
 static t_bool	check_filename(t_var *var, char *file);
 static t_bool	init_mlx(t_var *var);
 static t_bool	init_img(t_var *var);
 
-// TODO: cylinder, anti-aliasing, full-reflection
 int	main(int argc, char **argv)
 {
 	t_var	*var;
@@ -25,7 +24,6 @@ int	main(int argc, char **argv)
 		exit_with_err(var);
 	mlx_hook(var->mlx->window, KEY_DESTROY, 0, exit_with_err, var);
 	mlx_hook(var->mlx->window, KEY_PRESSED, 0, key_pressed, var);
-	mlx_hook(var->mlx->window, KEY_RELEASED, 0, key_released, var);
 	mlx_loop(var->mlx->mlx);
 	return (0);
 }

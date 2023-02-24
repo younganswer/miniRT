@@ -1,5 +1,4 @@
 SHELL	= /bin/bash
-SPINNER	= /-\|/
 IDX		= 0
 
 NAME	= miniRT
@@ -31,9 +30,8 @@ SRCS_DIR	= srcs
 OBJS_DIR	= objs
 
 CC		= cc
-CFLAGS	= -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${LIBGNL_INCS_DIR} -I${LIBVEC_INCS_DIR} -I${LIBMLX_INCS_DIR} -MD -O3
+CFLAGS	= -Wall -Wextra -Werror -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${LIBGNL_INCS_DIR} -I${LIBVEC_INCS_DIR} -I${LIBMLX_INCS_DIR} -MD -O3
 LDFLAGS	= -L${LIBFT_DIR} -lft -L${LIBGNL_DIR} -lgnl -L${LIBVEC_DIR} -lvec -L${LIBRAY_DIR} -lray -L${LIBMLX_DIR} -lmlx -framework OpenGL -framework AppKit
-#LDFLAGS += -fsanitize=address
 AR		= ar rcs
 RM		= rm -f
 
@@ -41,52 +39,108 @@ SRCS = 	miniRT.c \
 		err/exit_with_err.c \
 		err/set_err.c \
 		event/key_event.c \
-		parse/parse.c \
-		parse/parse_ambient_lightning.c \
-		parse/parse_camera.c \
-		parse/parse_light.c \
-		parse/parse_sphere.c \
-		parse/parse_plane.c \
-		parse/parse_cylinder.c \
-		render/render.c
-		
+		raytracing/raytracing.c \
+		raytracing/ambient.c \
+		raytracing/cylinder.c \
+		raytracing/diffuse.c \
+		raytracing/hit_object.c \
+		raytracing/mirror_reflection.c \
+		raytracing/phong_reflection.c \
+		raytracing/plane.c \
+		raytracing/ray.c \
+		raytracing/specular.c \
+		raytracing/sphere.c \
+		raytracing/vec3_utils_in_raytracing.c \
+		render/render.c \
+
+OBJS_DIRS = ${OBJS_DIR}/err \
+			${OBJS_DIR}/event \
+			${OBJS_DIR}/raytracing \
+			${OBJS_DIR}/render
+
+ifdef BONUS
+	SRCS += parse_bonus/parse_bonus.c \
+			parse_bonus/parse_ambient_lightning_bonus.c \
+			parse_bonus/parse_camera_bonus.c \
+			parse_bonus/parse_light_bonus.c \
+			parse_bonus/parse_sphere_bonus.c \
+			parse_bonus/parse_plane_bonus.c \
+			parse_bonus/parse_cylinder_bonus.c \
+			parse_bonus/parse_utils_bonus.c
+	OBJS_DIRS += ${OBJS_DIR}/parse_bonus
+else
+	SRCS += parse/parse.c \
+			parse/parse_ambient_lightning.c \
+			parse/parse_camera.c \
+			parse/parse_light.c \
+			parse/parse_sphere.c \
+			parse/parse_plane.c \
+			parse/parse_cylinder.c \
+			parse/parse_utils.c
+	OBJS_DIRS += ${OBJS_DIR}/parse
+endif
+
+ifdef SANITIZE
+	LDFLAGS += -fsanitize=address
+endif
+
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
 DEPS := ${OBJS:.o=.d}
 
+SRCS_LEN	= ${shell echo ${SRCS} | wc -w}
 
-all: ${NAME}
+IS_MANDATORY	= ${OBJS_DIR}/is_mandatory
+IS_BONUS		= ${OBJS_DIR}/is_bonus
 
 
-${NAME}: ${OBJS}
-	@printf "\bdone\n"
+all:
+	@${MAKE} ${IS_MANDATORY}
+
+
+bonus:
+	@${MAKE} BONUS=1 ${IS_BONUS}
+
+
+${IS_MANDATORY}: ${OBJS}
+	@${RM} ${IS_BONUS}
+	@if [ ${IDX} -gt 0 ]; then\
+		printf "\b"; echo "done ";\
+	fi
 	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS}
 	@echo "Build ${NAME}: done"
+	@touch ${IS_MANDATORY}
+
+
+${IS_BONUS}: ${OBJS}
+	@${RM} ${IS_MANDATORY}
+	@if [ ${IDX} -gt 0 ]; then\
+		printf "\b"; echo "done ";\
+	fi
+	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS}
+	@echo "Build ${NAME}: done"
+	@touch ${IS_BONUS}
 
 
 ${OBJS}: ${LIBMLX}
 
 
-${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
+${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIRS}
 	${eval IDX = ${shell expr ${IDX} + 1}}
-	${eval T_IDX = ${shell expr ${IDX} % 32}}
-	${eval T_IDX = ${shell expr ${T_IDX} / 8 + 1}}
-	${eval CHR = ${shell echo ${SPINNER} | cut -c ${T_IDX}}}
 	@if [ ${IDX} = 1 ]; then\
 		echo -n "Build dependencies in ${NAME} ...  ";\
 	fi
-	@printf "\b${CHR}"
+	@printf "%3d%%\b\b\b\b" ${shell expr ${IDX} \* 100 / ${SRCS_LEN}}
 	@${CC} ${CFLAGS} -g -c $< -o $@
 
 
 ${OBJS_DIR}:
 	@echo "Build ${NAME}"
 	@mkdir -p ${OBJS_DIR}
-	@mkdir -p ${OBJS_DIR}/err
-	@mkdir -p ${OBJS_DIR}/event
-	@mkdir -p ${OBJS_DIR}/parse
-	@mkdir -p ${OBJS_DIR}/raytracing
-	@mkdir -p ${OBJS_DIR}/render
+
+
+${OBJS_DIRS}: ${OBJS_DIR}
+	@mkdir -p ${OBJS_DIRS}
 
 
 ${LIBFT}:
@@ -110,34 +164,35 @@ ${LIBMLX}: ${LIBRAY}
 
 
 clean:
-	@echo "Remove dependencies in ${NAME}"
 	@${MAKE} -C ${LIBFT_DIR} clean
 	@${MAKE} -C ${LIBGNL_DIR} clean
 	@${MAKE} -C ${LIBVEC_DIR} clean
 	@${MAKE} -C ${LIBRAY_DIR} clean
 	@${MAKE} -C ${LIBMLX_DIR} clean
-	@rm -rf ${OBJS_DIR}
+	@echo "Remove dependencies in ${NAME}"
+	@${RM} -r ${OBJS_DIR}
 
 
 fclean:
-	@echo "Remove dependencies in ${NAME}"
 	@${MAKE} -C ${LIBFT_DIR} fclean
 	@${MAKE} -C ${LIBGNL_DIR} fclean
 	@${MAKE} -C ${LIBVEC_DIR} fclean
 	@${MAKE} -C ${LIBRAY_DIR} fclean
 	@${MAKE} -C ${LIBMLX_DIR} fclean
+	@echo "Remove dependencies in ${NAME}"
+	@${RM} -r ${OBJS_DIR}
 	@echo "Remove ${NAME}"
-	@rm -rf ${OBJS_DIR}
 	@${RM} ${NAME}
 	
 
 re:
-	@echo "Re-build ${NAME}"
+	@echo "Rebuild ${NAME}"
 	@${MAKE} fclean
 	@${MAKE} all
 
 
 .PHONY: all clean fclean re bonus
 
+.NOTPARALLEL: all clean fclean re bonus
 
 -include ${DEPS}

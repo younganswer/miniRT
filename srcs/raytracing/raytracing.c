@@ -1,24 +1,32 @@
 #include "../../incs/raytracing.h"
 
-t_vec3	phong_reflection(t_var *var, t_hit hit);
-t_vec3	get_origin_color(t_object *object);
-t_ray	handle_shadow_acne(t_ray ray);
+t_vec3	raytracing(t_var *var, t_hit hit);
+t_vec3	get_color(t_object *object);
+t_type	get_type(t_object *object);
 
-t_vec3	phong_reflection(t_var *var, t_hit hit)
+t_vec3	raytracing(t_var *var, t_hit hit)
 {
-	t_vec3	diff;
-	t_vec3	spec;
-	t_vec3	amb;
+	t_list	*light;
+	t_vec3	ret;
 
+	ret = (t_vec3){0, 0, 0};
 	if (hit.object == NULL)
-		return ((t_vec3){0, 0, 0});
-	diff = diffuse(var, hit);
-	spec = specular(var, hit, 5);
-	amb = ambient(var, hit.object);
-	return (vec3_add(vec3_add(diff, spec), amb));
+		return (ret);
+	light = var->lights;
+	while (light)
+	{
+		if (hit.type == LAMBERTIAN)
+			ret = vec3_add(ret, phong_reflection(var, light->content, hit));
+		else if (hit.type == DIELECTRIC)
+			ret = vec3_add(ret, vec3_mul(
+						mirror_reflection(var, light->content, hit, 5), 2.0
+						));
+		light = light->next;
+	}
+	return (vec3_mul(ret, 256));
 }
 
-t_vec3	get_origin_color(t_object *object)
+t_vec3	get_color(t_object *object)
 {
 	t_vec3	ret;
 
@@ -32,11 +40,16 @@ t_vec3	get_origin_color(t_object *object)
 	return (ret);
 }
 
-t_ray	handle_shadow_acne(t_ray ray)
+t_type	get_type(t_object *object)
 {
-	t_ray	ret;
+	t_type	ret;
 
-	ret = ray;
-	ret.origin = vec3_add(ret.origin, vec3_mul(ret.direction, 0.0001));
+	ret = 0;
+	if (object->shape == SPHERE)
+		ret = ((t_sphere *)object->object)->type;
+	else if (object->shape == PLANE)
+		ret = ((t_plane *)object->object)->type;
+	else if (object->shape == CYLINDER)
+		ret = ((t_cylinder *)object->object)->type;
 	return (ret);
 }
