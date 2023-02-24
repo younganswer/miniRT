@@ -45,6 +45,7 @@ t_vec3	specular(t_light *light, t_hit hit);
 // sphere.c
 double	get_distance_to_sphere(void *object, t_ray ray);
 t_ray	get_normal_of_sphere(void *object, t_vec3 contact);
+double	discriminate(double a, double half_b, double c);
 
 // vec3_utils_in_raytracing.c
 uint	vec3_to_color(t_vec3 vec);
