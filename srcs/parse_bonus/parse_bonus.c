@@ -91,21 +91,7 @@ static t_bool	parse_each_var(t_var *var, char **split)
 
 static t_bool	all_var_set_successfully(t_var *var)
 {
-	t_list	*tmp;
-	int		objects[3];
-
 	if (var->alight == NULL || var->camera == NULL || var->lights == NULL)
-		return (set_err(var, INVALID_ARG) && FALSE);
-	objects[0] = 0;
-	objects[1] = 0;
-	objects[2] = 0;
-	tmp = var->objects;
-	while (tmp)
-	{
-		objects[((t_object *)tmp->content)->shape]++;
-		tmp = tmp->next;
-	}
-	if (objects[0] == 0 || objects[1] == 0 || objects[2] == 0)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	return (TRUE);
 }
