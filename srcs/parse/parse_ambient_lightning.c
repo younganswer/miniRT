@@ -14,7 +14,7 @@ t_bool	parse_ambient_lightning(t_var *var, char **splited)
 	var->alight = ft_calloc(sizeof(t_alight), 1, "Error: Fail to init alight");
 	return (
 		parse_ratio(var, &var->alight->ratio, splited[0]) && \
-		set_color(var->alight)
+		set_color(&var->alight->color)
 	);
 }
 
