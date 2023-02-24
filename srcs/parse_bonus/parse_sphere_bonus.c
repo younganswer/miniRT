@@ -27,7 +27,7 @@ t_bool	parse_sphere(t_var *var, char **splited)
 
 static t_bool	parse_radius(t_var *var, double *radius, char *s_radius)
 {
-	*radius = ft_atof(s_radius);
+	*radius = (ft_atof(s_radius) / 2);
 	if (*radius <= 0)
 		return (set_err(var, INVALID_RANGE) && FALSE);
 	return (TRUE);
