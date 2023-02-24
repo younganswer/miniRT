@@ -13,12 +13,12 @@ t_bool	parse_cylinder(t_var *var, char **splited)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	object = ft_calloc(sizeof(t_object), 1, "Error: Fail to init object");
 	cylinder = ft_calloc(sizeof(t_cylinder), 1, "Error: Fail to init cylinder");
-	if (parse_vec3(&cylinder->center, splited[0]) == FALSE || \
-		parse_vec3(&cylinder->normal, splited[1]) == FALSE || \
+	if (parse_vec3(var, &cylinder->center, splited[0]) == FALSE || \
+		parse_vec3(var, &cylinder->normal, splited[1]) == FALSE || \
 		dir_range_is_valid(var, cylinder->normal) == FALSE || \
 		parse_radius(var, &cylinder->radius, splited[2]) == FALSE || \
 		parse_height(var, &cylinder->height, splited[3]) == FALSE || \
-		parse_vec3(&cylinder->color, splited[4]) == FALSE || \
+		parse_vec3(var, &cylinder->color, splited[4]) == FALSE || \
 		color_range_is_valid(var, cylinder->color) == FALSE || \
 		parse_type(var, &cylinder->type, splited[5]) == FALSE)
 		return (FALSE);

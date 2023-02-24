@@ -14,9 +14,9 @@ t_bool	parse_light(t_var *var, char **splited)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	light = ft_calloc(sizeof(t_light), 1, "Failed to allocate memory");
 	ft_lstadd_back(&var->lights, ft_lstnew(light));
-	if (parse_vec3(&light->origin, splited[0]) == FALSE || \
+	if (parse_vec3(var, &light->origin, splited[0]) == FALSE || \
 		parse_ratio(var, &light->ratio, splited[1]) == FALSE || \
-		parse_vec3(&light->color, splited[2]) == FALSE || \
+		parse_vec3(var, &light->color, splited[2]) == FALSE || \
 		color_range_is_valid(var, light->color) == FALSE)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	return (TRUE);

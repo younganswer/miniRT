@@ -16,8 +16,8 @@ t_bool	parse_camera(t_var *var, char **splited)
 		return (set_err(var, INVALID_ARG) && FALSE);
 	var->camera = ft_calloc(sizeof(t_camera), 1, "Error: Fail to init camera");
 	return (
-		parse_vec3(&var->camera->ray.origin, splited[0]) && \
-		parse_vec3(&var->camera->ray.direction, splited[1]) && \
+		parse_vec3(var, &var->camera->ray.origin, splited[0]) && \
+		parse_vec3(var, &var->camera->ray.direction, splited[1]) && \
 		check_dir_range(var, var->camera->ray.direction) && \
 		parse_fov(var, &var->camera->fov, splited[2]) && \
 		set_viewport(var->camera)

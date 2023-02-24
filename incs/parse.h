@@ -29,7 +29,7 @@ t_bool	parse_cylinder(t_var *var, char **splited);
 
 // parse_utils.c
 char	*get_next_line_not_empty(int fd);
-t_bool	parse_vec3(t_vec3 *vec, char *line);
+t_bool	parse_vec3(t_var *var, t_vec3 *vec, char *line);
 t_bool	parse_type(t_var *var, t_type *type, char *line);
 
 #endif
