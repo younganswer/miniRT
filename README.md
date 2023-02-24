@@ -26,7 +26,8 @@
 		* `pl position orientation color`
 	* Cylinder
 		* `cy position orientation diameter height color`
-	* Element in capital letters are mandatory
+* Elements in capital letters are mandatory
+* Color of light is used in bonus part
 <br/><br/><br/>
 
 ### Result
