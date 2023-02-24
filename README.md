@@ -30,7 +30,7 @@
 * Color of light is used in bonus part
 <br/><br/><br/>
 
-### Result
+## Result
 * Mandatory(scene01.rt)
 ![Mandatory(scene01.rt)](./result/mandatory.png)
 * Bonus(scene02.rt)
