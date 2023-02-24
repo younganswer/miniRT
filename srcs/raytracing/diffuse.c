@@ -21,7 +21,7 @@ t_vec3	diffuse(t_var *var, t_light *light, t_hit hit)
 			);
 	const t_vec3	light_color = vec3_mul(
 			light->color,
-			light->ratio / 256.0 / K
+			light->ratio / 256.0
 			);
 	const t_vec3	obj_color = vec3_mul(
 			hit.color,

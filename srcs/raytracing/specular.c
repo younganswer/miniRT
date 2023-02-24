@@ -13,7 +13,7 @@ t_vec3	specular(t_light *light, t_hit hit)
 	const double	specular_ratio = get_specular_ratio(light_ray, hit);
 	const t_vec3	light_color = vec3_mul(
 			light->color,
-			light->ratio / 256.0 / K
+			light->ratio / 256.0
 			);
 	const t_vec3	obj_color = vec3_mul(
 			hit.color,

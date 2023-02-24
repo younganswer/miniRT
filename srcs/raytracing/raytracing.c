@@ -37,6 +37,8 @@ t_vec3	get_color(t_object *object)
 		ret = ((t_plane *)object->object)->color;
 	else if (object->shape == CYLINDER)
 		ret = ((t_cylinder *)object->object)->color;
+	else if (object->shape == CONE)
+		ret = ((t_cone *)object->object)->color;
 	return (ret);
 }
 
@@ -51,5 +53,7 @@ t_type	get_type(t_object *object)
 		ret = ((t_plane *)object->object)->type;
 	else if (object->shape == CYLINDER)
 		ret = ((t_cylinder *)object->object)->type;
+	else if (object->shape == CONE)
+		ret = ((t_cone *)object->object)->type;
 	return (ret);
 }
