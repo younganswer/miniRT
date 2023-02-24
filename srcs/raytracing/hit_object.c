@@ -39,10 +39,7 @@ static t_bool	set_hit(t_hit *hit, t_object *object, double dist, t_ray ray)
 {
 	hit->object = object;
 	hit->ray.origin = ray.origin;
-	hit->ray.direction = vec3_mul(
-			ray.direction,
-			dist / vec3_length(ray.direction)
-			);
+	hit->ray.direction = vec3_mul(ray.direction, dist);
 	hit->normal = (t_ray){(t_vec3){0, 0, 0}, (t_vec3){0, 0, 0}};
 	hit->color = (t_vec3){0, 0, 0};
 	if (dist < INF)
