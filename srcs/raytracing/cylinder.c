@@ -95,14 +95,8 @@ static double	get_distance_to_curved(t_cylinder *cylinder, t_ray ray)
 		= vec3_dot(oc, oc) - \
 			pow(vec3_dot(oc, cylinder->normal), 2) - \
 				pow(cylinder->radius, 2);
-	double			ret;
+	const double	ret = discriminate(a, half_b, c);
 
-	ret = pow(half_b, 2) - a * c;
-	if (ret < 0)
-		return (INF);
-	ret = (-half_b - sqrt(ret)) / a;
-	if (ret < 0)
-		return (INF);
 	if (is_out_of_height(cylinder, ray, ret))
 		return (INF);
 	return (ret);
