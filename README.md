@@ -33,4 +33,3 @@
 * Mandatory(scene01.rt)
 ![Mandatory(scene01.rt)](./result/mandatory.png)
 * Bonus(scene02.rt)
-![Bonus(scene02.rt)](./result/bonus.png)
