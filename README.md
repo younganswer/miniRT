@@ -41,9 +41,9 @@
 <br/><br/><br/>
 
 ## Result
-### Mandatory(scene01.rt)
+### Mandatory (scene01.rt)
 	$ ./minirt scene/scene01.rt
 ![Mandatory(scene01.rt)](./result/mandatory.png)
-### Bonus(scene02.rt)
+### Bonus (scene02.rt)
 	$ ./minirt scene/scene02.rt
 ![Bonus(scene02.rt)](./result/bonus.png)
