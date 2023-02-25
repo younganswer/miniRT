@@ -8,26 +8,30 @@
 
 ## Install
 	$ make [-jN] (all)
+	$ make [-jN] bonus
 <br/><br/><br/>
 
 ## Usage
 	$ ./miniRT /path_to_scene/your_scene.rt
 * File must end with `.rt` extension
-* Scene file has 6 elements:
+* Scene file supports 7 elements:
 	* Ambient light:
-		* `A ratio [color]`
+		* `A ratio [color](bonus)`
 	* Camera
 		* `C position orientation fov`
 	* Light
-		* `L position ratio [color]`
+		* `L position ratio [color](bonus)`
 	* Sphere
 		* `sp position diameter color`
 	* Plane
 		* `pl position normal color`
 	* Cylinder
 		* `cy position axis diameter height color`
+	* Cone (bonus)
+		* `co position axis diameter height color`
 * Elements in capital letters are mandatory
 * Color of light is used in bonus part
+* To use elements in bonus, you must compile with `make bonus`
 <br/><br/><br/>
 
 ## Result
