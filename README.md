@@ -29,9 +29,9 @@
 		* `cy position axis diameter height color`
 	* Cone (bonus)
 		* `co position axis diameter height color`
-* Elements in capital letters are mandatory
-* Color of light is used in bonus part
-* To use elements in bonus, you must compile with `make bonus`
+* Elements in capital letters are mandatory and those are must not duplicated
+* Multiple, colored lights are supported in bonus part
+* To use elements in bonus part, you must compile with `make bonus`
 <br/><br/><br/>
 
 ## Result
