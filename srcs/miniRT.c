@@ -71,7 +71,7 @@ static t_bool	init_img(t_var *var)
 	var->img->img = mlx_new_image(var->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (var->img->img == NULL)
 		return (set_err(var, GENERIC_ERR) && FALSE);
-	var->img->addr = (UINT *) mlx_get_data_addr(
+	var->img->addr = (uint *) mlx_get_data_addr(
 			var->img->img, &var->img->bits_per_pixel,
 			&var->img->size_line, &var->img->endian
 			);
