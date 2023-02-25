@@ -17,15 +17,15 @@
 	* Ambient light:
 		* `A ratio [color]`
 	* Camera
-		* `C position direction fov`
+		* `C position orientation fov`
 	* Light
 		* `L position ratio [color]`
 	* Sphere
 		* `sp position diameter color`
 	* Plane
-		* `pl position orientation color`
+		* `pl position normal color`
 	* Cylinder
-		* `cy position orientation diameter height color`
+		* `cy position axis diameter height color`
 * Elements in capital letters are mandatory
 * Color of light is used in bonus part
 <br/><br/><br/>
