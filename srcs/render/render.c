@@ -28,9 +28,9 @@ const double	g_offset = 0.3;
 const double	g_whole_weight = 256.0;
 
 int				render(t_var *var);
-UINT			anti_aliasing(t_var *var, double row, double col);
+uint			anti_aliasing(t_var *var, double row, double col);
 static t_vec3	get_color_of_sample(t_var *var, double row, double col, int i);
-static t_bool	clamp(t_vec3 *ret, UINT min, UINT max);
+static t_bool	clamp(t_vec3 *ret, uint min, uint max);
 
 int	render(t_var *var)
 {
@@ -50,7 +50,7 @@ int	render(t_var *var)
 	return (TRUE);
 }
 
-UINT	anti_aliasing(t_var *var, double row, double col)
+uint	anti_aliasing(t_var *var, double row, double col)
 {
 	int		i;
 	t_vec3	color;
@@ -79,7 +79,7 @@ static t_vec3	get_color_of_sample(t_var *var, double row, double col, int i)
 	return (vec3_mul(ret, g_weight[row_offset][col_offset] / g_whole_weight));
 }
 
-static t_bool	clamp(t_vec3 *ret, UINT min, UINT max)
+static t_bool	clamp(t_vec3 *ret, uint min, uint max)
 {
 	if (ret->x < min)
 		ret->x = min;

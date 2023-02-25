@@ -81,9 +81,11 @@ t_bool	color_range_is_valid(t_var *var, t_vec3 color)
 
 t_bool	dir_range_is_valid(t_var *var, t_vec3 dir)
 {
-	if (fabs(dir.x) <= 1 && fabs(dir.y) <= 1 && fabs(dir.z) <= 1)
-		return (TRUE);
-	return (set_err(var, INVALID_RANGE) && FALSE);
+	if (1 <= fabs(dir.x) && 1 <= fabs(dir.y) && 1 <= fabs(dir.z))
+		return (set_err(var, INVALID_RANGE) && FALSE);
+	if (dir.x == 0 && dir.y == 0 && dir.z == 0)
+		return (set_err(var, INVALID_RANGE) && FALSE);
+	return (TRUE);
 }
 
 static t_bool	parse_each_var(t_var *var, char **split)
