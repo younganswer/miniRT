@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:56:00 by younhwan          #+#    #+#             */
-/*   Updated: 2023/02/25 14:56:04 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/02/25 19:54:48 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_bool	color_range_is_valid(t_var *var, t_vec3 color)
 
 t_bool	dir_range_is_valid(t_var *var, t_vec3 dir)
 {
-	if (1 <= fabs(dir.x) && 1 <= fabs(dir.y) && 1 <= fabs(dir.z))
+	if (1 < fabs(dir.x) || 1 < fabs(dir.y) || 1 < fabs(dir.z))
 		return (set_err(var, INVALID_RANGE) && FALSE);
 	if (dir.x == 0 && dir.y == 0 && dir.z == 0)
 		return (set_err(var, INVALID_RANGE) && FALSE);
