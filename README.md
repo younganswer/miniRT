@@ -38,7 +38,6 @@
 * Texture of objects below is supported in bonus part
 	* LAMBERTIAN
 	* DIELECTRIC
-* Example) `sp 0.0,0.0,0.0 10.0 255.999,255.999,255.999 DIELECTRIC`
 <br/><br/><br/>
 
 ## Result
