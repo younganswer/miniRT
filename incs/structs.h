@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/25 15:43:52 by younhwan          #+#    #+#             */
+/*   Updated: 2023/02/25 15:44:55 by younhwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
@@ -5,8 +17,8 @@
 # include "../libs/libvec/incs/vec3.h"
 # include "../libs/libray/incs/libray.h"
 
-# ifndef uint
-#  define uint unsigned int
+# ifndef UINT
+#  define UINT unsigned int
 # endif
 
 # define SCREEN_WIDTH 1280
