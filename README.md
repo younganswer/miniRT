@@ -7,15 +7,11 @@
 <br/><br/><br/>
 
 ## Install
-
-* Mandatory part
-
+### Mandatory part
 	$ make [-jN] (all)
-
-* Bonus part
-
+### Bonus part
 	$ make [-jN] bonus
-	
+
 <br/><br/><br/>
 
 ## Usage
