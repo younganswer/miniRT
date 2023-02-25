@@ -16,6 +16,7 @@
 
 ## Usage
 	$ ./miniRT /path_to_scene/your_scene.rt
+### To use elements in bonus part, you must compile with `make bonus`
 * File must end with `.rt` extension
 * Scene file supports 7 elements:
 	* Ambient light:
@@ -34,11 +35,16 @@
 		* `co position axis diameter height color`
 * Elements in capital letters are mandatory and those must not be duplicated
 * Multiple, colored lights are supported in bonus part
-* To use elements in bonus part, you must compile with `make bonus`
+* Texture of objects in below is supported in bonus part
+	* LAMBERTIAN
+	* DIELECTRIC
+* Example) `sp 0.0,0.0,0.0 10.0 255.999,255.999,255.999 DIELECTRIC`
 <br/><br/><br/>
 
 ## Result
-* Mandatory(scene01.rt)
+### Mandatory(scene01.rt)
+	$ ./minirt scene/scene01.rt
 ![Mandatory(scene01.rt)](./result/mandatory.png)
-* Bonus(scene02.rt)
+### Bonus(scene02.rt)
+	$ ./minirt scene/scene02.rt
 ![Bonus(scene02.rt)](./result/bonus.png)
