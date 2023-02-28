@@ -31,7 +31,7 @@ static t_ray	get_reflect(t_hit hit)
 	return ((t_ray){
 		hit.normal.origin,
 		vec3_reflect(
-			vec3_reverse(hit.ray.direction),
+			hit.ray.direction,
 			hit.normal.direction
 		)
 	});

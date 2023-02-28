@@ -7,8 +7,8 @@ static double	get_specular_ratio(t_ray light_ray, t_hit hit);
 t_vec3	specular(t_light *light, t_hit hit)
 {
 	const t_ray		light_ray = (t_ray){
-		hit.normal.origin,
-		vec3_sub(light->origin, hit.normal.origin)
+		light->origin,
+		vec3_sub(hit.normal.origin, light->origin)
 	};
 	const double	specular_ratio = get_specular_ratio(light_ray, hit);
 	const t_vec3	light_color = vec3_mul(
