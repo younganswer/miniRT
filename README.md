@@ -35,7 +35,7 @@
 		* `co position axis diameter height color`
 * Elements in capital letters are mandatory and those must not be duplicated
 * Multiple, colored lights are supported in bonus part
-* Texture of objects below is supported in bonus part
+* Textures of objects below are supported in bonus part
 	* LAMBERTIAN
 	* DIELECTRIC
 <br/><br/><br/>
