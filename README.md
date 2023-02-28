@@ -16,7 +16,7 @@
 
 ## Usage
 	$ ./miniRT /path_to_scene/your_scene.rt
-#### To use elements in bonus part, you must compile with `make bonus`
+#### To use elements supported in bonus part, you must compile with `make bonus`
 * File must end with `.rt` extension
 * Scene file supports 7 elements:
 	* Ambient light:
