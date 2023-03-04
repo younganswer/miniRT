@@ -43,7 +43,7 @@ t_ray	primary_ray(t_camera *camera, double row, double col);
 t_hit	hit_object(t_var *var, t_ray ray);
 
 // specular.c
-t_vec3	specular(t_light *light, t_hit hit);
+t_vec3	specular(t_var *var, t_light *light, t_hit hit);
 
 // sphere.c
 double	get_distance_to_sphere(void *object, t_ray ray);
